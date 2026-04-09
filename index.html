@@ -7,40 +7,41 @@
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     :root{
-      --bg:#08070c;--bg2:#100d18;--panel:rgba(255,255,255,.06);--panel2:rgba(255,255,255,.03);--stroke:rgba(255,255,255,.11);
-      --text:#f8f7ff;--muted:#b8b3d1;--purple:#9b5cff;--cyan:#56e4ff;--gold:#ffcf55;--red:#ff5f75;--green:#58f0b4;--shadow:0 18px 50px rgba(0,0,0,.45);
+      --bg:#07060a;--bg2:#110d16;--panel:rgba(255,255,255,.06);--panel2:rgba(255,255,255,.03);--stroke:rgba(255,255,255,.11);
+      --text:#f9f8ff;--muted:#bdb8d1;--purple:#9b5cff;--cyan:#56e4ff;--gold:#ffcf55;--red:#ff667f;--green:#58f0b4;--shadow:0 18px 50px rgba(0,0,0,.45);
     }
     *{box-sizing:border-box} html,body{margin:0;min-height:100%;background:
-      radial-gradient(900px 520px at 50% -10%, rgba(155,92,255,.22), transparent 60%),
-      radial-gradient(700px 450px at 92% 10%, rgba(86,228,255,.14), transparent 55%),
-      radial-gradient(900px 700px at 10% 100%, rgba(155,92,255,.10), transparent 60%),
+      radial-gradient(900px 520px at 50% -10%, rgba(155,92,255,.18), transparent 60%),
+      radial-gradient(700px 450px at 92% 10%, rgba(86,228,255,.10), transparent 55%),
+      radial-gradient(900px 700px at 10% 100%, rgba(155,92,255,.08), transparent 60%),
       linear-gradient(180deg,var(--bg),var(--bg2));
       color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;overflow-x:hidden}
     body{padding:14px 14px 100px;display:flex;justify-content:center} button,input,select,textarea{font:inherit}
-    .app{width:min(470px,100%);position:relative}
+    .app{width:min(480px,100%);position:relative}
     #splash{position:fixed;inset:0;z-index:999;background:
-      radial-gradient(700px 400px at 50% 10%, rgba(155,92,255,.20), transparent 60%),
+      radial-gradient(700px 400px at 50% 10%, rgba(155,92,255,.16), transparent 60%),
       linear-gradient(180deg,#08070c,#0b0a10 55%,#09070c);display:flex;align-items:center;justify-content:center;overflow:hidden;transition:opacity .28s ease}
     .stars{position:absolute;inset:0;overflow:hidden;pointer-events:none}
-    .star{position:absolute;background:#fff;border-radius:50%;box-shadow:0 0 10px rgba(255,255,255,1),0 0 22px rgba(255,255,255,.9),0 0 40px rgba(155,92,255,.55);animation:twinkle .95s infinite ease-in-out;opacity:.28}
-    @keyframes twinkle{0%,100%{transform:scale(.65);opacity:.24}50%{transform:scale(1.9);opacity:1}}
-    .splashBox{position:relative;z-index:2;text-align:center;width:min(300px,82vw)}
-    .logoOrb{width:122px;height:122px;margin:0 auto 20px;border-radius:34px;border:1px solid rgba(255,255,255,.13);background:
+    .star{position:absolute;background:#fff;border-radius:50%;box-shadow:0 0 6px rgba(255,255,255,.95),0 0 14px rgba(255,255,255,.65),0 0 24px rgba(155,92,255,.22);animation:twinkle 1.15s infinite ease-in-out;opacity:.34}
+    @keyframes twinkle{0%,100%{transform:scale(.7);opacity:.2}50%{transform:scale(1.7);opacity:1}}
+    .splashBox{position:relative;z-index:2;text-align:center;width:min(310px,84vw)}
+    .logoOrb{width:124px;height:124px;margin:0 auto 18px;border-radius:34px;border:1px solid rgba(255,255,255,.13);background:
       radial-gradient(circle at 30% 25%, rgba(255,255,255,.14), transparent 40%),
-      linear-gradient(145deg, rgba(155,92,255,.30), rgba(86,228,255,.12));box-shadow:0 18px 70px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.18);display:grid;place-items:center;font-size:54px}
-    .splashTitle{font-weight:900;font-size:24px;letter-spacing:.3px}.splashSub{margin-top:8px;color:var(--muted);font-size:13px}
+      linear-gradient(145deg, rgba(155,92,255,.22), rgba(86,228,255,.10));box-shadow:0 18px 70px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.18);display:grid;place-items:center;overflow:hidden}
+    .logoImg{width:100%;height:100%;object-fit:cover}
+    .splashTitle{font-weight:900;font-size:23px;letter-spacing:.3px}.splashSub{margin-top:8px;color:var(--muted);font-size:13px}
     .progress{height:14px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.09);overflow:hidden;margin-top:24px}
     .bar{height:100%;width:0;background:linear-gradient(90deg,rgba(80,80,92,.5),#fff);border-radius:999px;box-shadow:0 0 24px rgba(255,255,255,.28);transition:width .16s linear}.loadingText{height:18px;margin-top:14px;color:rgba(255,255,255,.84);font-size:13px}
     .top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;position:sticky;top:0;padding-top:8px;z-index:20;backdrop-filter:blur(10px)}
-    .brand{display:flex;align-items:center;gap:12px;min-width:0}.brandLogo{width:52px;height:52px;border-radius:18px;flex:0 0 auto;display:grid;place-items:center;background:linear-gradient(145deg, rgba(155,92,255,.26), rgba(86,228,255,.12));border:1px solid var(--stroke);box-shadow:var(--shadow);font-size:25px}
-    .brandTitle{font-weight:900;font-size:17px;line-height:1.05}.brandSub{margin-top:4px;font-size:12px;color:var(--muted)}
-    .topActions{display:flex;gap:8px}.iconBtn{position:relative;width:46px;height:46px;border:none;border-radius:16px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.95);display:grid;place-items:center;box-shadow:0 14px 38px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.12);cursor:pointer}
-    .iconBtn.profile{width:54px;height:54px;border-radius:18px;background:linear-gradient(135deg, rgba(155,92,255,.28), rgba(86,228,255,.18));box-shadow:0 0 24px rgba(155,92,255,.34),0 12px 42px rgba(0,0,0,.30), inset 0 1px 0 rgba(255,255,255,.22)}
-    .iconBtn svg{width:21px;height:21px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}.brandLogo{width:54px;height:54px;border-radius:19px;flex:0 0 auto;display:grid;place-items:center;background:linear-gradient(145deg, rgba(155,92,255,.20), rgba(86,228,255,.09));border:1px solid var(--stroke);box-shadow:var(--shadow);overflow:hidden}
+    .brandLogo img{width:100%;height:100%;object-fit:cover}.brandTitle{font-weight:900;font-size:17px;line-height:1.05}.brandSub{margin-top:4px;font-size:12px;color:var(--muted)}
+    .topActions{display:flex;gap:8px;align-items:center}.iconBtn,.langBtn{position:relative;border:none;border-radius:16px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.95);display:grid;place-items:center;box-shadow:0 14px 38px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.12);cursor:pointer}
+    .iconBtn{width:46px;height:46px}.iconBtn.profile{width:54px;height:54px;border-radius:18px;background:linear-gradient(135deg, rgba(155,92,255,.26), rgba(86,228,255,.16));box-shadow:0 0 24px rgba(155,92,255,.28),0 12px 42px rgba(0,0,0,.30), inset 0 1px 0 rgba(255,255,255,.22)}
+    .iconBtn svg{width:21px;height:21px}.langBtn{min-width:58px;height:40px;padding:0 12px;font-size:12px;font-weight:900}
     .hero{padding:18px;border-radius:26px;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--stroke);box-shadow:var(--shadow);position:relative;overflow:hidden;margin-bottom:12px}
-    .hero::before{content:"";position:absolute;inset:auto -60px -90px auto;width:180px;height:180px;background:radial-gradient(circle, rgba(155,92,255,.25), transparent 65%);filter:blur(10px)}
+    .hero::before{content:"";position:absolute;inset:auto -60px -90px auto;width:180px;height:180px;background:radial-gradient(circle, rgba(155,92,255,.24), transparent 65%);filter:blur(10px)}
     .heroTag{display:inline-flex;align-items:center;gap:8px;padding:8px 11px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);font-size:11px;font-weight:800;color:#fff}
-    .heroTitle{font-size:28px;font-weight:900;line-height:1.02;margin:14px 0 10px}.heroText{font-size:13px;line-height:1.5;color:var(--muted);max-width:330px}
+    .heroTitle{font-size:28px;font-weight:900;line-height:1.02;margin:14px 0 10px}.heroText{font-size:13px;line-height:1.5;color:var(--muted);max-width:350px}
     .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.metric{padding:12px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}.metricNum{font-size:18px;font-weight:900}.metricLabel{margin-top:4px;color:var(--muted);font-size:11px}
     .tabs{display:flex;gap:8px;padding:8px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid var(--stroke);box-shadow:0 12px 30px rgba(0,0,0,.26);position:sticky;top:76px;z-index:19;margin-bottom:12px;backdrop-filter:blur(10px)}
     .tab{flex:1;padding:12px 8px;border:none;background:transparent;color:rgba(255,255,255,.74);border-radius:15px;font-size:12px;font-weight:900;cursor:pointer}.tab.active{background:linear-gradient(90deg, rgba(155,92,255,.38), rgba(86,228,255,.18));color:#fff;border:1px solid rgba(255,255,255,.10)}.screen{display:none}.screen.active{display:block}
@@ -53,54 +54,52 @@
     .sectionHead{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:2px 0 12px}.sectionTitle{font-size:20px;font-weight:900}.sectionMeta{font-size:12px;color:var(--muted)}
     .bunnyGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.bunny{border-radius:22px;padding:12px;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.09);position:relative;overflow:hidden;cursor:pointer;box-shadow:0 14px 34px rgba(0,0,0,.24)}
     .bunny::before{content:"";position:absolute;inset:auto -40px -65px auto;width:140px;height:140px;background:radial-gradient(circle, rgba(155,92,255,.22), transparent 60%)}.bunny.selected{border-color:rgba(86,228,255,.42);box-shadow:0 0 0 1px rgba(86,228,255,.34), 0 14px 34px rgba(0,0,0,.24)}.bunny.used{opacity:.58;filter:saturate(.72)}
-    .bunnyHead{display:flex;justify-content:space-between;align-items:center;gap:8px}.bunnyId{font-size:12px;font-weight:900;color:#fff}.badge{padding:6px 9px;border-radius:999px;font-size:10px;font-weight:900;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.06)}.badge.available{color:#dcfff0;background:rgba(88,240,180,.10);border-color:rgba(88,240,180,.24)}.badge.used{color:#ffe5ea;background:rgba(255,95,117,.10);border-color:rgba(255,95,117,.24)}.badge.review{color:#fff3cc;background:rgba(255,207,85,.10);border-color:rgba(255,207,85,.24)}
-    .bunnyArt{margin-top:10px;aspect-ratio:1/1;border-radius:18px;display:grid;place-items:center;font-size:50px;background:radial-gradient(circle at 30% 20%, rgba(255,255,255,.10), transparent 35%),linear-gradient(145deg, rgba(155,92,255,.22), rgba(86,228,255,.08));border:1px solid rgba(255,255,255,.08);overflow:hidden}
-    .bunnyArt img{width:100%;height:100%;object-fit:cover;display:block}.bunnyName{margin-top:10px;font-size:14px;font-weight:900}.bunnyMeta{margin-top:4px;font-size:11px;color:var(--muted);line-height:1.45}
-    .selectedBox{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px;border-radius:22px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);margin-top:14px}.selectedMain{display:flex;align-items:center;gap:12px}.selectedArt{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(145deg, rgba(155,92,255,.24), rgba(86,228,255,.10));border:1px solid rgba(255,255,255,.10);font-size:28px;overflow:hidden}.selectedArt img{width:100%;height:100%;object-fit:cover;display:block}
-    .selectedName{font-size:15px;font-weight:900}.selectedSub{margin-top:4px;font-size:12px;color:var(--muted)}
-    .prizeList{display:grid;gap:10px;margin-top:12px}.prize{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:12px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}.prizeIcon{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg, rgba(255,207,85,.20), rgba(255,255,255,.05));font-size:22px}.prizeName{font-size:14px;font-weight:900}.prizeMeta{margin-top:4px;font-size:11px;color:var(--muted)}.prizeCount{padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.06);font-size:11px;font-weight:900}
-    .rules{display:grid;gap:10px;margin-top:12px}.rule{padding:12px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);font-size:13px;line-height:1.45;color:#f2f0ff}.rule span{color:var(--cyan);font-weight:900}
-    .historyList{display:grid;gap:10px;margin-top:12px}.history{padding:12px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}.historyTop{display:flex;justify-content:space-between;gap:10px;align-items:center}.historyName{font-size:13px;font-weight:900}.historyTime{font-size:11px;color:var(--muted)}.historyPrize{margin-top:6px;color:#fff;font-size:12px}
-    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.48);backdrop-filter:blur(10px);display:none;align-items:flex-end;justify-content:center;padding:14px;z-index:120}.overlay.show{display:flex}.sheet{width:min(470px,100%);max-height:88vh;overflow:auto;border-radius:28px;padding:18px;background:linear-gradient(180deg, rgba(14,12,20,.98), rgba(9,8,12,.98));border:1px solid rgba(255,255,255,.10);box-shadow:0 25px 70px rgba(0,0,0,.48);animation:sheetIn .22s ease both}
-    @keyframes sheetIn{from{transform:translateY(14px);opacity:.72}to{transform:none;opacity:1}}.sheetTop{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.sheetTitle{font-size:22px;font-weight:900}.closeBtn{width:42px;height:42px;border:none;border-radius:14px;background:rgba(255,255,255,.08);color:#fff;cursor:pointer}
-    .spinStage{padding:18px 12px 14px;border-radius:24px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);text-align:center}.spinner{height:112px;border-radius:24px;background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.08);display:grid;place-items:center;position:relative;overflow:hidden;margin-top:12px}.spinnerGlow{position:absolute;inset:auto 50% -60px auto;transform:translateX(50%);width:180px;height:120px;background:radial-gradient(circle, rgba(155,92,255,.30), transparent 65%)}.spinText{position:relative;z-index:2;font-size:20px;font-weight:900;letter-spacing:.2px}.spinSub{margin-top:8px;color:var(--muted);font-size:12px}.resultBox{margin-top:14px;padding:16px;border-radius:22px;background:linear-gradient(145deg, rgba(155,92,255,.14), rgba(86,228,255,.08));border:1px solid rgba(255,255,255,.10);display:none}.resultBox.show{display:block}.resultIcon{font-size:46px}.resultTitle{margin-top:8px;font-size:23px;font-weight:900}.resultMeta{margin-top:8px;color:var(--muted);font-size:13px;line-height:1.45}
-    .toast{position:fixed;left:50%;bottom:42px;transform:translateX(-50%) translateY(20px) scale(.95);padding:16px 24px;border-radius:20px;font-size:15px;font-weight:700;color:#fff;background:linear-gradient(135deg, rgba(155,92,255,.24), rgba(86,228,255,.14));border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(16px);box-shadow:0 12px 42px rgba(0,0,0,.40),inset 0 1px 0 rgba(255,255,255,.18),0 0 25px rgba(155,92,255,.32);opacity:0;pointer-events:none;z-index:200;transition:all .24s ease}.toast.show{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
+    .bunnyHead{display:flex;justify-content:space-between;gap:10px;align-items:center}.bunnyId{font-size:12px;font-weight:900;letter-spacing:.2px}.badge{padding:6px 9px;border-radius:999px;font-size:10px;font-weight:900;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.06)}.badge.used{background:rgba(255,95,117,.12);border-color:rgba(255,95,117,.24);color:#ffe4eb}.badge.review{background:rgba(255,207,85,.12);border-color:rgba(255,207,85,.24);color:#ffefbe}.badge.available{background:rgba(88,240,180,.10);border-color:rgba(88,240,180,.24);color:#dcfff2}
+    .bunnyArt,.selectedArt{width:100%;aspect-ratio:1/1;margin-top:12px;border-radius:20px;background:linear-gradient(145deg, rgba(155,92,255,.18), rgba(86,228,255,.08));border:1px solid rgba(255,255,255,.08);display:grid;place-items:center;overflow:hidden;font-size:48px;box-shadow:inset 0 1px 0 rgba(255,255,255,.10)}
+    .bunnyArt img,.selectedArt img,.adminThumb img{width:100%;height:100%;object-fit:cover}.bunnyName{margin-top:12px;font-size:15px;font-weight:900;line-height:1.15}.bunnyMeta{margin-top:6px;font-size:12px;color:var(--muted);line-height:1.35;min-height:32px}
+    .selectedBox{display:grid;gap:12px}.selectedMain{display:grid;grid-template-columns:88px 1fr;gap:12px;align-items:center}.selectedArt{width:88px;margin-top:0;border-radius:18px;font-size:36px}.selectedName{font-size:18px;font-weight:900}.selectedSub{margin-top:6px;font-size:12px;color:var(--muted);line-height:1.35}.quoteMeta{margin-top:10px;padding:10px 12px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);font-size:12px;color:#ddd6ff;line-height:1.4}
+    .rules{display:grid;gap:10px}.rule{padding:12px 14px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);font-size:13px;line-height:1.45;color:#eee}.rule span{font-weight:900;color:#fff}.historyList,.prizeList{display:grid;gap:10px}.history,.prize{padding:12px 14px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07)}.historyTop,.sheetTop{display:flex;align-items:center;justify-content:space-between;gap:10px}.historyName,.prizeName{font-size:14px;font-weight:900}.historyTime,.prizeMeta{font-size:11px;color:var(--muted);margin-top:3px}.historyPrize{margin-top:8px;font-size:13px;color:#fff}.prize{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}.prizeIcon{width:48px;height:48px;border-radius:16px;background:linear-gradient(145deg, rgba(155,92,255,.20), rgba(86,228,255,.08));display:grid;place-items:center;border:1px solid rgba(255,255,255,.08);font-size:23px}.prizeCount{font-size:11px;font-weight:900;color:#fff;padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08)}
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(10px);display:none;align-items:flex-end;justify-content:center;z-index:110;padding:12px}.overlay.show{display:flex}.sheet{width:min(480px,100%);max-height:90vh;overflow:auto;border-radius:28px 28px 22px 22px;background:linear-gradient(180deg, rgba(15,13,22,.98), rgba(8,7,12,.98));border:1px solid rgba(255,255,255,.10);box-shadow:0 24px 70px rgba(0,0,0,.45);padding:14px}.sheetTitle{font-size:20px;font-weight:900}.closeBtn{width:42px;height:42px;border-radius:14px;border:none;background:rgba(255,255,255,.06);color:#fff;cursor:pointer}
+    .spinStage{padding:8px 0 4px}.spinner{display:grid;place-items:center;height:220px;border-radius:24px;background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden}.spinnerGlow{position:absolute;inset:auto 50% -70px auto;width:180px;height:180px;transform:translateX(50%);background:radial-gradient(circle, rgba(155,92,255,.30), transparent 62%)}.spinText{font-size:24px;font-weight:900}.spinSub{margin-top:8px;color:var(--muted);font-size:13px;text-align:center;max-width:260px}
+    .resultBox{margin-top:12px;padding:14px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);display:none}.resultBox.show{display:block}.resultIcon{width:58px;height:58px;border-radius:18px;background:linear-gradient(145deg, rgba(155,92,255,.24), rgba(86,228,255,.10));display:grid;place-items:center;font-size:26px}.resultTitle{margin-top:10px;font-size:18px;font-weight:900}.resultMeta{margin-top:6px;font-size:13px;color:var(--muted)}
+    .toast{position:fixed;left:50%;bottom:40px;transform:translateX(-50%) translateY(20px) scale(.95);padding:16px 24px;border-radius:20px;font-size:15px;font-weight:700;color:#fff;background:linear-gradient(135deg, rgba(155,92,255,.24), rgba(86,228,255,.14));border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(16px);box-shadow:0 12px 42px rgba(0,0,0,.40),inset 0 1px 0 rgba(255,255,255,.18),0 0 25px rgba(155,92,255,.32);opacity:0;pointer-events:none;z-index:200;transition:all .24s ease}.toast.show{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
     .mini{font-size:11px;color:var(--muted)}.divider{height:1px;background:rgba(255,255,255,.07);margin:14px 0}
-    .adminList{display:grid;gap:10px}.adminRow{padding:12px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}.adminTop{display:flex;justify-content:space-between;gap:10px;align-items:center}.adminTitle{font-size:14px;font-weight:900}.adminMeta{margin-top:4px;font-size:11px;color:var(--muted)}.adminControls{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.field{width:100%;padding:12px 13px;border-radius:14px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.05);color:#fff;outline:none}.noteField{margin-top:10px}.hidden{display:none !important}
-    @media (max-width:390px){.bunnyGrid,.adminControls{grid-template-columns:1fr}.metrics{grid-template-columns:1fr}.heroTitle{font-size:24px}.tabs{top:74px}}
+    .adminList{display:grid;gap:10px}.adminRow{padding:12px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}.adminTop{display:grid;grid-template-columns:52px 1fr auto;gap:10px;align-items:center}.adminThumb{width:52px;height:52px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:linear-gradient(145deg, rgba(155,92,255,.18), rgba(86,228,255,.08));display:grid;place-items:center;font-size:22px}.adminTitle{font-size:14px;font-weight:900}.adminMeta{margin-top:4px;font-size:11px;color:var(--muted);line-height:1.35}.adminControls{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.field{width:100%;padding:12px 13px;border-radius:14px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.05);color:#fff;outline:none}.noteField{margin-top:10px}.hidden{display:none !important}
+    @media (max-width:390px){.bunnyGrid,.adminControls,.metrics{grid-template-columns:1fr}.heroTitle{font-size:24px}.tabs{top:74px}.selectedMain{grid-template-columns:1fr}.selectedArt{width:100%;height:auto}}
   </style>
 </head>
 <body>
-  <div id="splash"><div class="stars" id="stars"></div><div class="splashBox"><div class="logoOrb">🐰</div><div class="splashTitle">Degen Bunny Easter Spin</div><div class="splashSub">Seasonal event for holders</div><div class="progress"><div class="bar" id="bar"></div></div><div class="loadingText" id="loadingText">Charging luck...</div></div></div>
+  <div id="splash"><div class="stars" id="stars"></div><div class="splashBox"><div class="logoOrb"><img class="logoImg" src="bunnylogo.png" alt="Degen Bunny" onerror="this.outerHTML='🐰'" /></div><div class="splashTitle" id="splashTitle"></div><div class="splashSub" id="splashSub"></div><div class="progress"><div class="bar" id="bar"></div></div><div class="loadingText" id="loadingText"></div></div></div>
   <div class="app">
     <div class="top">
-      <div class="brand"><div class="brandLogo">🐰</div><div><div class="brandTitle">Degen Bunny Spin</div><div class="brandSub" id="seasonLabel">Easter Season 2026</div></div></div>
+      <div class="brand"><div class="brandLogo"><img src="bunnylogo.png" alt="Degen Bunny" onerror="this.outerHTML='🐰'" /></div><div><div class="brandTitle" id="brandTitle"></div><div class="brandSub" id="seasonLabel"></div></div></div>
       <div class="topActions">
+        <button class="langBtn" id="langBtn">EN</button>
         <button class="iconBtn hidden" id="adminBtn" aria-label="Admin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l2.3 4.7 5.2.8-3.8 3.7.9 5.3L12 14l-4.6 2.5.9-5.3L4.5 7.5l5.2-.8L12 2z"/><path d="M12 10v4"/><path d="M10.5 12h3"/></svg></button>
         <button class="iconBtn" id="prizeBtn" aria-label="Prizes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l2.8 5.6 6.2.9-4.5 4.4 1.1 6.1L12 17l-5.6 3 1.1-6.1L3 9.5l6.2-.9L12 3z"/></svg></button>
         <button class="iconBtn profile" id="profileBtn" aria-label="Profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="8" r="4"/></svg></button>
       </div>
     </div>
-    <section class="hero"><div class="heroTag">🐣 Seasonal NFT Event · 55 Bunny Total</div><div class="heroTitle">Spin only with your real Bunny</div><div class="heroText">Connect TON wallet, load Bunny from the real collection, pick one specific NFT, and spin. Admin panel appears only for your whitelisted wallet.</div><div class="metrics"><div class="metric"><div class="metricNum" id="metricOwned">0</div><div class="metricLabel">Owned Bunny</div></div><div class="metric"><div class="metricNum" id="metricSpins">0 / 3</div><div class="metricLabel">Wallet Spins</div></div><div class="metric"><div class="metricNum" id="metricRare">6</div><div class="metricLabel">Rare Rewards Left</div></div></div></section>
-    <nav class="tabs"><button class="tab active" data-screen="home">Home</button><button class="tab" data-screen="inventory">Inventory</button><button class="tab" data-screen="rules">Rules</button></nav>
+    <section class="hero"><div class="heroTag" id="heroTag"></div><div class="heroTitle" id="heroTitle"></div><div class="heroText" id="heroText"></div><div class="metrics"><div class="metric"><div class="metricNum" id="metricOwned">0</div><div class="metricLabel" id="metricOwnedLabel"></div></div><div class="metric"><div class="metricNum" id="metricSpins">0 / 3</div><div class="metricLabel" id="metricSpinsLabel"></div></div><div class="metric"><div class="metricNum" id="metricRare">6</div><div class="metricLabel" id="metricRareLabel"></div></div></div></section>
+    <nav class="tabs"><button class="tab active" data-screen="home" id="tabHome"></button><button class="tab" data-screen="inventory" id="tabInventory"></button><button class="tab" data-screen="rules" id="tabRules"></button></nav>
     <section class="screen active" id="home">
       <div class="card">
-        <h2 class="cardTitle">Wallet access</h2>
-        <div class="cardSub">TON Connect lives here. After connection, the app fetches NFT items from your Degen Bunny collection and unlocks admin only for your wallet.</div>
-        <div class="walletBox"><div><div class="walletLabel">Wallet status</div><div class="walletValue" id="walletValue">Not connected</div></div><div id="ton-connect"></div></div>
-        <div class="statusPills"><div class="pill" id="ownedPill">Owned: 0</div><div class="pill warn" id="limitPill">Wallet limit: 3</div><div class="pill" id="selectedPill">Selected: none</div><div class="pill hidden" id="adminPill">Admin access</div></div>
-        <div class="row"><button class="btn secondary" id="refreshInventoryBtn">Refresh inventory</button><button class="btn ghost" id="goInventoryBtn">Open inventory</button></div>
+        <h2 class="cardTitle" id="walletAccessTitle"></h2>
+        <div class="cardSub" id="walletAccessSub"></div>
+        <div class="walletBox"><div><div class="walletLabel" id="walletStatusLabel"></div><div class="walletValue" id="walletValue"></div></div><div id="ton-connect"></div></div>
+        <div class="statusPills"><div class="pill" id="ownedPill"></div><div class="pill warn" id="limitPill"></div><div class="pill" id="selectedPill"></div><div class="pill hidden" id="adminPill"></div></div>
+        <div class="row"><button class="btn secondary" id="refreshInventoryBtn"></button><button class="btn ghost" id="goInventoryBtn"></button></div>
       </div>
-      <div class="card"><div class="sectionHead"><div><div class="sectionTitle">Selected Bunny</div><div class="sectionMeta">Choose one Bunny to start spin</div></div></div><div class="selectedBox" id="selectedBox"><div class="selectedMain"><div class="selectedArt" id="selectedArt">?</div><div><div class="selectedName" id="selectedName">No Bunny selected</div><div class="selectedSub" id="selectedSub">Open inventory and pick your Bunny</div></div></div><button class="btn primary" id="spinBtn" disabled>Spin</button></div></div>
-      <div class="card"><div class="sectionHead"><div><div class="sectionTitle">Limited rewards</div><div class="sectionMeta">Rare prizes disappear from pool after claim</div></div><button class="btn ghost" id="openPrizesBtn">See all</button></div><div class="prizeList" id="rarePreview"></div></div>
+      <div class="card"><div class="sectionHead"><div><div class="sectionTitle" id="selectedBunnyTitle"></div><div class="sectionMeta" id="selectedBunnyMeta"></div></div></div><div class="selectedBox" id="selectedBox"><div class="selectedMain"><div class="selectedArt" id="selectedArt">?</div><div><div class="selectedName" id="selectedName"></div><div class="selectedSub" id="selectedSub"></div><div class="quoteMeta hidden" id="selectedQuote"></div></div></div><button class="btn primary" id="spinBtn" disabled></button></div></div>
+      <div class="card"><div class="sectionHead"><div><div class="sectionTitle" id="poolTitle"></div><div class="sectionMeta" id="poolMeta"></div></div><button class="btn ghost" id="openPrizesBtn"></button></div><div class="prizeList" id="rarePreview"></div></div>
     </section>
-    <section class="screen" id="inventory"><div class="card"><div class="sectionHead"><div><div class="sectionTitle">Your Bunny inventory</div><div class="sectionMeta">1 Bunny = 1 spin · max 3 spins per wallet</div></div><div class="mini" id="inventoryMeta">0 items</div></div><div class="bunnyGrid" id="bunnyGrid"></div></div></section>
-    <section class="screen" id="rules"><div class="card"><div class="sectionTitle">Event rules</div><div class="rules"><div class="rule"><span>1 Bunny = 1 spin.</span> A specific NFT can enter only once during the current season.</div><div class="rule"><span>Max 3 spins per wallet.</span> Even if the wallet holds more Bunny, seasonal wallet limit stays 3.</div><div class="rule"><span>Admin override.</span> Your whitelisted wallet unlocks a hidden admin panel where you can mark Bunny manually.</div><div class="rule"><span>Rare rewards are limited.</span> Premium Avatar ×3, Premium Banner ×2, Golden Egg ×1.</div><div class="rule"><span>Backend later.</span> This build is front-end first; server verification can be added after wallet/API flow is approved.</div></div><div class="divider"></div><div class="row"><button class="btn secondary" id="resetBtn">Reset local season</button></div></div><div class="card"><div class="sectionTitle">Recent spins</div><div class="historyList" id="historyList"></div></div></section>
+    <section class="screen" id="inventory"><div class="card"><div class="sectionHead"><div><div class="sectionTitle" id="inventoryTitle"></div><div class="sectionMeta" id="inventorySub"></div></div><div class="mini" id="inventoryMeta">0</div></div><div class="bunnyGrid" id="bunnyGrid"></div></div></section>
+    <section class="screen" id="rules"><div class="card"><div class="sectionTitle" id="rulesTitle"></div><div class="rules"><div class="rule" id="rule1"></div><div class="rule" id="rule2"></div><div class="rule" id="rule3"></div><div class="rule" id="rule4"></div></div><div class="divider"></div><div class="row"><button class="btn secondary hidden" id="resetBtn"></button></div></div><div class="card"><div class="sectionTitle" id="historyTitle"></div><div class="historyList" id="historyList"></div></div></section>
   </div>
-  <div class="overlay" id="spinOverlay"><div class="sheet"><div class="sheetTop"><div class="sheetTitle">Spin chamber</div><button class="closeBtn" data-close="spinOverlay">✕</button></div><div class="spinStage"><div class="mini">Selected Bunny: <span id="spinBunnyLabel">—</span></div><div class="spinner"><div class="spinnerGlow"></div><div><div class="spinText" id="spinText">Ready</div><div class="spinSub" id="spinSub">Press start when your Bunny is selected</div></div></div><div class="row" style="justify-content:center"><button class="btn primary full" id="startSpinBtn">Start spin</button></div><div class="resultBox" id="resultBox"><div class="resultIcon" id="resultIcon">🎁</div><div class="resultTitle" id="resultTitle">Reward</div><div class="resultMeta" id="resultMeta"></div></div></div></div></div>
-  <div class="overlay" id="prizeOverlay"><div class="sheet"><div class="sheetTop"><div class="sheetTitle">Prize pool</div><button class="closeBtn" data-close="prizeOverlay">✕</button></div><div class="prizeList" id="prizeList"></div></div></div>
-  <div class="overlay" id="profileOverlay"><div class="sheet"><div class="sheetTop"><div class="sheetTitle">Profile</div><button class="closeBtn" data-close="profileOverlay">✕</button></div><div class="card" style="margin:0"><div class="walletLabel">Telegram / wallet</div><div class="walletValue" id="profileWallet">Not connected</div><div class="statusPills"><div class="pill" id="profileOwned">Owned: 0</div><div class="pill warn" id="profileSpins">Spins: 0 / 3</div><div class="pill good" id="profileSeason">Season active</div></div></div><div class="card" style="margin-top:12px;margin-bottom:0"><div class="sectionTitle">Reward history</div><div class="historyList" id="profileHistory"></div></div></div></div>
-  <div class="overlay" id="adminOverlay"><div class="sheet"><div class="sheetTop"><div class="sheetTitle">Admin panel</div><button class="closeBtn" data-close="adminOverlay">✕</button></div><div class="card" style="margin:0 0 12px"><div class="cardTitle">Manual Bunny control</div><div class="cardSub">Only your whitelisted wallet sees this panel. Each Bunny can be marked independently for the current season.</div></div><div class="adminList" id="adminList"></div></div></div>
+  <div class="overlay" id="spinOverlay"><div class="sheet"><div class="sheetTop"><div class="sheetTitle" id="spinSheetTitle"></div><button class="closeBtn" data-close="spinOverlay">✕</button></div><div class="spinStage"><div class="mini" id="spinSelectedLabel"></div><div class="spinner"><div class="spinnerGlow"></div><div><div class="spinText" id="spinText"></div><div class="spinSub" id="spinSub"></div></div></div><div class="row" style="justify-content:center"><button class="btn primary full" id="startSpinBtn"></button></div><div class="resultBox" id="resultBox"><div class="resultIcon" id="resultIcon">🎁</div><div class="resultTitle" id="resultTitle"></div><div class="resultMeta" id="resultMeta"></div></div></div></div></div>
+  <div class="overlay" id="prizeOverlay"><div class="sheet"><div class="sheetTop"><div class="sheetTitle" id="prizeSheetTitle"></div><button class="closeBtn" data-close="prizeOverlay">✕</button></div><div class="prizeList" id="prizeList"></div></div></div>
+  <div class="overlay" id="profileOverlay"><div class="sheet"><div class="sheetTop"><div class="sheetTitle" id="profileTitle"></div><button class="closeBtn" data-close="profileOverlay">✕</button></div><div class="card" style="margin:0"><div class="walletLabel" id="profileWalletLabel"></div><div class="walletValue" id="profileWallet"></div><div class="statusPills"><div class="pill" id="profileOwned"></div><div class="pill warn" id="profileSpins"></div><div class="pill good" id="profileSeason"></div></div></div><div class="card" style="margin-top:12px;margin-bottom:0"><div class="sectionTitle" id="profileHistoryTitle"></div><div class="historyList" id="profileHistory"></div></div></div></div>
+  <div class="overlay" id="adminOverlay"><div class="sheet"><div class="sheetTop"><div class="sheetTitle" id="adminTitle"></div><button class="closeBtn" data-close="adminOverlay">✕</button></div><div class="card" style="margin:0 0 12px"><div class="cardTitle" id="adminCardTitle"></div><div class="cardSub" id="adminCardSub"></div></div><div class="adminList" id="adminList"></div></div></div>
   <div class="toast" id="toast"></div>
 
   <script type="module">
@@ -111,112 +110,198 @@
     if (tg) { try { tg.ready(); tg.expand(); } catch(e){} }
 
     const SEASON_ID = 'easter_2026';
-    const STORAGE_KEY = 'degen_bunny_spin_state_v2';
+    const STORAGE_KEY = 'degen_bunny_spin_state_v3';
     const COLLECTION_ADDRESS = 'EQCaygWhPBkyQrvlsxZ_Olc-_kcssa9wJu7GCs5_VGGd9hZR';
     const ADMIN_WALLET = 'UQDUYivnYh1puqzb-YyGpq05nrMaLKDYBLc9SmVHd2ZCE29u';
     const MANIFEST_URL = new URL('./tonconnect-manifest.json', window.location.href).toString();
-    const TOTAL_LOADING_TIME = 3200;
-    const loadingPhrases = ['Charging luck...','Syncing Bunny aura...','Scanning Degen Bunny...','Preparing spin chamber...','Unlocking event layer...'];
+    const TOTAL_LOADING_TIME = 3000;
 
-    const prizeTemplate = [
-      { id:'premium_avatar', name:'Premium Avatar', icon:'👑', description:'Custom premium avatar reward', rarity:'Rare', count:3, weight:3 },
-      { id:'premium_banner', name:'Premium Banner', icon:'🖼️', description:'Custom premium banner reward', rarity:'Rare', count:2, weight:2 },
-      { id:'golden_egg', name:'Golden Egg', icon:'🥚', description:'Animated avatar reward', rarity:'Legendary', count:1, weight:1 },
-      { id:'sticker_pack_7', name:'7 Sticker Pack', icon:'✨', description:'Seven premium stickers', rarity:'Common', count:999, weight:20 },
-      { id:'sticker_pack_5', name:'5 Sticker Pack', icon:'🎀', description:'Five sticker reward', rarity:'Common', count:999, weight:24 },
-      { id:'sticker_pack_3', name:'3 Sticker Pack', icon:'🎁', description:'Three sticker reward', rarity:'Common', count:999, weight:24 },
-      { id:'sticker_pack_1', name:'1 Sticker Reward', icon:'💌', description:'One sticker reward', rarity:'Common', count:999, weight:18 },
-      { id:'discount_10', name:'10% Discount', icon:'💸', description:'Discount on future shop order', rarity:'Common', count:999, weight:8 }
-    ];
-
-    function createAdminRegistry() {
-      const reg = {};
-      for (let i = 0; i < 55; i++) {
-        reg[String(i)] = { status: 'available', prize: '', note: '', updatedAt: null };
+    const t = {
+      ru: {
+        langBtn:'EN', splashTitle:'Degen Bunny Easter Spin', splashSub:'Сезонный ивент для холдеров', loading:['Подключаем удачу...','Сканируем кролей...','Готовим пасхальный спин...','Открываем сезонный слой...','Синхронизируем инвентарь...'],
+        brandTitle:'Degen Bunny Spin', season:'Пасхальный сезон 2026', heroTag:'🐣 Сезонный NFT-ивент · 55 Bunny', heroTitle:'Спин только с реальным Bunny', heroText:'Подключи TON-кошелёк, загрузи Bunny из коллекции, выбери конкретного кроля и крути спин. Админ-доступ открыт только для твоего кошелька.',
+        metricOwned:'Кролей в кошельке', metricSpins:'Спины кошелька', metricRare:'Редких наград осталось',
+        tabHome:'Главная', tabInventory:'Инвентарь', tabRules:'Правила',
+        walletAccessTitle:'Доступ к кошельку', walletAccessSub:'После подключения приложение загрузит твоих Bunny из коллекции и покажет доступные для участия NFT.', walletStatus:'Статус кошелька', notConnected:'Не подключен',
+        refreshInventory:'Обновить инвентарь', goInventory:'Открыть инвентарь', ownedPill:(n)=>`Владение: ${n}`, limitPill:'Лимит кошелька: 3', selectedPill:(txt)=>`Выбран: ${txt}`, adminAccess:'Админ-доступ',
+        selectedBunnyTitle:'Выбранный Bunny', selectedBunnyMeta:'Выбери одного Bunny для спина', noBunnySelected:'Bunny не выбран', openInventoryHint:'Открой инвентарь и выбери Bunny', spin:'Крутить спин',
+        bunnyReady:(i)=>`Bunny #${i} готов к спину`, bunnyUsed:(i)=>`Bunny #${i} уже отмечен как использованный`, metadataQuote:'Коллекционные метаданные',
+        poolTitle:'Пул наград', poolMeta:'Названия временно скрыты, редкость остаётся видимой', openAll:'Открыть все',
+        inventoryTitle:'Инвентарь Bunny', inventorySub:'1 Bunny = 1 spin · максимум 3 спина на кошелёк', inventoryItems:(n)=>`${n} шт.`, inventoryConnectFirst:'Сначала подключи кошелёк, чтобы загрузить Bunny из коллекции.', inventoryEmpty:'Bunny не найдены. Нажми «Обновить инвентарь» после подключения.',
+        rulesTitle:'Правила', rule1:'<span>1 Bunny = 1 spin.</span> Один и тот же NFT участвует только один раз за текущий сезон.', rule2:'<span>Максимум 3 спина на кошелёк.</span> Даже если в кошельке больше Bunny, лимит сезона остаётся 3.', rule3:'<span>Редкие награды лимитированы.</span> После выдачи лимитные позиции исчезают из пула.', rule4:'<span>Проверка идёт по конкретному Bunny.</span> Для участия выбирается отдельный NFT из твоего инвентаря.', resetSeason:'Сбросить локальный сезон',
+        historyTitle:'История спинов', noHistory:'История пока пуста.', won:'Выпало',
+        spinSheetTitle:'Камера спина', spinSelectedLabel:(name)=>`Выбранный Bunny: ${name}`, spinReady:'Готово', spinReadySub:'Нажми старт, когда Bunny выбран', startSpin:'Запустить спин', spinWords:['Заряжаем','Крутим','Сканируем','Фиксируем','Открываем'], spinChamber:(i)=>`Bunny #${i} сейчас в камере`, resultLocked:'Награда зафиксирована', resultSaved:'След сохранён в истории. Статус Bunny ты меняешь сам из админ-панели.',
+        prizeSheetTitle:'Пул наград', profileTitle:'Профиль', profileWalletLabel:'Telegram / кошелёк', profileHistoryTitle:'История наград', profileSeason:'Сезон активен', spinsProfile:(n)=>`Спины: ${n} / 3`,
+        adminTitle:'Админ-панель', adminCardTitle:'Ручной контроль Bunny', adminCardSub:'Здесь видно, какой Bunny уже прокручен и какая награда ему выпала. Статус меняешь вручную.',
+        statusAvailable:'доступен', statusReview:'проверка', statusUsed:'использован', statusMap:{available:'ДОСТУПЕН',review:'ПРОВЕРКА',used:'ИСПОЛЬЗОВАН'},
+        adminMeta:(status, prize, time)=>`Статус: ${status}${prize ? ` · Награда: ${prize}` : ''}${time ? ` · Спин: ${time}` : ''}`,
+        adminPrizePlaceholder:'Награда / тег', adminNotePlaceholder:'Заметка',
+        rarity:{common:'Обычная', uncommon:'Необычная', rare:'Редкая', legendary:'Легендарная'}, left:(n)=>`${n} осталось`, infinite:'∞',
+        refreshLoaded:(n)=> n ? `Загружено Bunny: ${n}` : 'В этом кошельке Bunny не найдены', walletFirst:'Сначала подключи кошелёк', inventoryFailed:'Не удалось загрузить NFT', selectFirst:'Сначала выбери Bunny', alreadyUsed:'Этот Bunny уже отмечен как использованный', walletLimitReached:'Лимит спинов кошелька достигнут', adminDetected:'Обнаружен админ-кошелёк', resetDone:'Локальный сезон сброшен', rewardWon:(label)=>`${label} получен`, removed:'Удалено', loaded:'Загружено', loading:'Загрузка...', secretReward:'Секретная награда', rewardGeneric:(rarity)=>`${rarity} награда`
+      },
+      en: {
+        langBtn:'RU', splashTitle:'Degen Bunny Easter Spin', splashSub:'Seasonal event for holders', loading:['Charging luck...','Scanning Bunny...','Preparing Easter spin...','Opening seasonal layer...','Syncing inventory...'],
+        brandTitle:'Degen Bunny Spin', season:'Easter Season 2026', heroTag:'🐣 Seasonal NFT Event · 55 Bunny', heroTitle:'Spin only with a real Bunny', heroText:'Connect a TON wallet, load Bunny from the collection, pick one specific rabbit, and spin. Admin access is only shown for your wallet.',
+        metricOwned:'Owned Bunny', metricSpins:'Wallet spins', metricRare:'Rare rewards left',
+        tabHome:'Home', tabInventory:'Inventory', tabRules:'Rules',
+        walletAccessTitle:'Wallet access', walletAccessSub:'After connection the app will load Bunny from the collection and show which NFT can participate.', walletStatus:'Wallet status', notConnected:'Not connected',
+        refreshInventory:'Refresh inventory', goInventory:'Open inventory', ownedPill:(n)=>`Owned: ${n}`, limitPill:'Wallet limit: 3', selectedPill:(txt)=>`Selected: ${txt}`, adminAccess:'Admin access',
+        selectedBunnyTitle:'Selected Bunny', selectedBunnyMeta:'Pick one Bunny for spin', noBunnySelected:'No Bunny selected', openInventoryHint:'Open inventory and choose a Bunny', spin:'Spin now',
+        bunnyReady:(i)=>`Bunny #${i} is ready for spin`, bunnyUsed:(i)=>`Bunny #${i} is already marked as used`, metadataQuote:'Collection metadata',
+        poolTitle:'Reward pool', poolMeta:'Names are hidden for now, rarity remains visible', openAll:'See all',
+        inventoryTitle:'Bunny inventory', inventorySub:'1 Bunny = 1 spin · max 3 spins per wallet', inventoryItems:(n)=>`${n} items`, inventoryConnectFirst:'Connect wallet first to load Bunny from the collection.', inventoryEmpty:'No Bunny loaded yet. Tap “Refresh inventory” after wallet connection.',
+        rulesTitle:'Rules', rule1:'<span>1 Bunny = 1 spin.</span> A specific NFT enters only once during the current season.', rule2:'<span>Max 3 spins per wallet.</span> Even if the wallet holds more Bunny, the seasonal wallet cap stays 3.', rule3:'<span>Rare rewards are limited.</span> Limited slots disappear from the pool after they are assigned.', rule4:'<span>Verification is tied to a specific Bunny.</span> Participation uses one NFT chosen from your inventory.', resetSeason:'Reset local season',
+        historyTitle:'Spin history', noHistory:'No spins yet.', won:'Won',
+        spinSheetTitle:'Spin chamber', spinSelectedLabel:(name)=>`Selected Bunny: ${name}`, spinReady:'Ready', spinReadySub:'Press start when your Bunny is selected', startSpin:'Start spin', spinWords:['Charging','Rolling','Scanning','Locking','Opening'], spinChamber:(i)=>`Bunny #${i} is in the chamber`, resultLocked:'Reward locked', resultSaved:'History trace saved. Bunny status stays manual in the admin panel.',
+        prizeSheetTitle:'Reward pool', profileTitle:'Profile', profileWalletLabel:'Telegram / wallet', profileHistoryTitle:'Reward history', profileSeason:'Season active', spinsProfile:(n)=>`Spins: ${n} / 3`,
+        adminTitle:'Admin panel', adminCardTitle:'Manual Bunny control', adminCardSub:'Here you can see which Bunny already spun and which reward it received. Status remains manual.',
+        statusAvailable:'available', statusReview:'review', statusUsed:'used', statusMap:{available:'AVAILABLE',review:'REVIEW',used:'USED'},
+        adminMeta:(status, prize, time)=>`Status: ${status}${prize ? ` · Reward: ${prize}` : ''}${time ? ` · Spin: ${time}` : ''}`,
+        adminPrizePlaceholder:'Reward / tag', adminNotePlaceholder:'Note',
+        rarity:{common:'Common', uncommon:'Uncommon', rare:'Rare', legendary:'Legendary'}, left:(n)=>`${n} left`, infinite:'∞',
+        refreshLoaded:(n)=> n ? `Loaded Bunny: ${n}` : 'No Bunny found in this wallet', walletFirst:'Connect wallet first', inventoryFailed:'Failed to load NFT inventory', selectFirst:'Select Bunny first', alreadyUsed:'This Bunny is already marked used', walletLimitReached:'Wallet season limit reached', adminDetected:'Admin wallet detected', resetDone:'Local season reset', rewardWon:(label)=>`${label} won`, loaded:'Loaded', loading:'Loading...', secretReward:'Secret reward', rewardGeneric:(rarity)=>`${rarity} reward`
       }
-      return reg;
-    }
+    };
+
+    let tonConnectUI = null;
+    let state = loadState();
+    let spinning = false;
+    let spinTimer = null;
+    let toastTimer = null;
+    let loadingPhraseIndex = 0;
 
     function createDefaultState(){
       return {
-        seasonId: SEASON_ID,
-        wallet: null,
-        walletRaw: null,
-        connected: false,
-        isAdmin: false,
-        ownedBunnies: [],
-        selectedBunnyId: null,
-        walletSpinsUsed: 0,
-        bunnyUsage: {},
-        history: [],
-        prizes: JSON.parse(JSON.stringify(prizeTemplate)),
-        adminRegistry: createAdminRegistry()
+        language:'ru', connected:false, wallet:null, walletRaw:null, isAdmin:false,
+        ownedBunnies:[], collectionBunnies:[], selectedBunnyId:null, walletSpinsUsed:0,
+        prizes:[
+          { id:'slot_legendary', icon:'🥚', publicName:'', rarity:'legendary', count:1, weight:2 },
+          { id:'slot_rare_a', icon:'🎨', publicName:'', rarity:'rare', count:2, weight:5 },
+          { id:'slot_rare_b', icon:'🖼️', publicName:'', rarity:'rare', count:3, weight:7 },
+          { id:'slot_uncommon_a', icon:'🎁', publicName:'', rarity:'uncommon', count:6, weight:14 },
+          { id:'slot_uncommon_b', icon:'✨', publicName:'', rarity:'uncommon', count:8, weight:18 },
+          { id:'slot_common', icon:'🎫', publicName:'', rarity:'common', count:999, weight:54 }
+        ],
+        history:[],
+        bunnyUsage:{},
+        adminRegistry:{},
       };
     }
 
     function loadState(){
-      try{
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if(!raw) return createDefaultState();
-        const parsed = JSON.parse(raw);
-        if(parsed.seasonId !== SEASON_ID) return createDefaultState();
-        parsed.prizes ||= JSON.parse(JSON.stringify(prizeTemplate));
-        parsed.ownedBunnies ||= [];
-        parsed.bunnyUsage ||= {};
-        parsed.history ||= [];
-        parsed.walletSpinsUsed ||= 0;
-        parsed.adminRegistry ||= createAdminRegistry();
-        parsed.connected ||= false; parsed.isAdmin ||= false; parsed.wallet ||= null; parsed.walletRaw ||= null; parsed.selectedBunnyId ||= null;
-        return parsed;
-      }catch(e){ return createDefaultState(); }
+      try {
+        const raw = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        return { ...createDefaultState(), ...(raw || {}) };
+      } catch {
+        return createDefaultState();
+      }
     }
-    let state = loadState();
-    let toastTimer = null; let spinTimer = null; let spinning = false; let tonConnectUI;
-
     function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
-    function showToast(text){ const el = document.getElementById('toast'); el.textContent = text; el.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(()=> el.classList.remove('show'), 980); }
-    function openOverlay(id){ document.getElementById(id).classList.add('show'); }
-    function closeOverlay(id){ document.getElementById(id).classList.remove('show'); }
-    function shortWallet(value){ return value ? value.slice(0,6) + '...' + value.slice(-4) : 'Not connected'; }
-    function createStars(){ const wrap = document.getElementById('stars'); for(let i=0;i<88;i++){ const s=document.createElement('div'); s.className='star'; const size=Math.random()*3 + 1.2; s.style.width=size+'px'; s.style.height=size+'px'; s.style.left=Math.random()*100+'%'; s.style.top=Math.random()*100+'%'; s.style.animationDuration=(Math.random()*1 + .7)+'s'; s.style.animationDelay=(Math.random()*1.4)+'s'; wrap.appendChild(s);} }
-    function runSplash(){ const start=Date.now(); let phraseIndex=0; const bar=document.getElementById('bar'); const loadingText=document.getElementById('loadingText'); loadingText.textContent=loadingPhrases[0]; const phraseInt=setInterval(()=>{ phraseIndex=(phraseIndex+1)%loadingPhrases.length; loadingText.textContent=loadingPhrases[phraseIndex]; },450); const progressInt=setInterval(()=>{ const progress=Math.min(100,((Date.now()-start)/TOTAL_LOADING_TIME)*100); bar.style.width=progress+'%'; if(progress>=100){ clearInterval(progressInt); clearInterval(phraseInt); setTimeout(()=>{ const splash=document.getElementById('splash'); splash.style.opacity='0'; setTimeout(()=> splash.remove(), 280); }, 120);} }, 42); }
+
+    function ui(){ return t[state.language] || t.ru; }
+    function setText(id, value){ const el = document.getElementById(id); if(el) el.textContent = value; }
+    function setHTML(id, value){ const el = document.getElementById(id); if(el) el.innerHTML = value; }
+
+    function showToast(text, duration=900){
+      const toast = document.getElementById('toast');
+      toast.textContent = text;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), duration);
+    }
 
     function normalizeAddress(address){
-      if(!address) return null;
       try {
-        const a = Address.parse(address);
-        return {
-          raw: a.toRawString(),
-          bounceable: a.toString({ bounceable: true, urlSafe: true, testOnly: false }),
-          nonBounceable: a.toString({ bounceable: false, urlSafe: true, testOnly: false })
-        };
+        const parsed = Address.parse(address);
+        return { bounceable: parsed.toString({ bounceable:true, urlSafe:true }), raw: parsed.toRawString() };
       } catch { return null; }
     }
-
     function isAdminWallet(address){
-      const connected = normalizeAddress(address);
-      const admin = normalizeAddress(ADMIN_WALLET);
-      if(!connected || !admin) return false;
-      return connected.raw === admin.raw;
+      const connected = normalizeAddress(address); const admin = normalizeAddress(ADMIN_WALLET);
+      return !!connected && !!admin && connected.raw === admin.raw;
     }
-
-    function getBunnyRegistry(index){ return state.adminRegistry[String(index)] || { status:'available', prize:'', note:'' }; }
-    function setBunnyRegistry(index, patch){ state.adminRegistry[String(index)] = { ...getBunnyRegistry(index), ...patch, updatedAt: new Date().toISOString() }; saveState(); }
+    function resolveAssetUrl(url){
+      if(!url) return '';
+      if(url.startsWith('ipfs://')) return 'https://ipfs.io/ipfs/' + url.replace('ipfs://','').replace(/^ipfs\//,'');
+      return url;
+    }
+    function formatTime(iso){ return iso ? new Date(iso).toLocaleString(state.language === 'ru' ? 'ru-RU' : 'en-US') : ''; }
+    function getRegistry(index){ return state.adminRegistry[String(index)] || { status:'available', prize:'', note:'', spunPrize:'', spunAt:'' }; }
+    function setRegistry(index, patch){ state.adminRegistry[String(index)] = { ...getRegistry(index), ...patch, updatedAt:new Date().toISOString() }; saveState(); }
     function getSelectedBunny(){ return state.ownedBunnies.find(b => b.id === state.selectedBunnyId) || null; }
-    function getRareLeft(){ return state.prizes.filter(p => p.rarity !== 'Common').reduce((sum,p)=>sum + Math.max(p.count,0), 0); }
+    function getRareLeft(){ return state.prizes.filter(p => p.rarity !== 'common').reduce((sum,p)=>sum + Math.max(p.count,0), 0); }
+    function rarityLabel(r){ return ui().rarity[r] || r; }
+    function getPrizeLabel(prize){ return prize.publicName || ui().rewardGeneric(rarityLabel(prize.rarity)); }
 
-    function choosePrize(){
-      const available = state.prizes.filter(p => p.count > 0 || p.count === 999);
-      const totalWeight = available.reduce((sum, p) => sum + p.weight, 0);
-      let roll = Math.random() * totalWeight;
-      for(const prize of available){
-        roll -= prize.weight;
-        if(roll <= 0){
-          if(prize.count !== 999) prize.count -= 1;
-          return prize;
+    function createSplashStars(){
+      const wrap = document.getElementById('stars');
+      wrap.innerHTML = '';
+      const stars = [];
+      function egg(cx, cy, rx, ry, count){
+        for(let i=0;i<count;i++){
+          const t = (Math.PI * 2 * i) / count;
+          const x = cx + rx * Math.sin(t) * (1 + 0.12 * Math.cos(t));
+          const y = cy + ry * (-Math.cos(t) + 0.18 * Math.sin(2*t));
+          stars.push([x + (Math.random()*1.2-0.6), y + (Math.random()*1.2-0.6)]);
         }
       }
-      return available[available.length - 1];
+      function kulich(cx, cy, w, h){
+        const pts = [];
+        for(let i=0;i<18;i++) pts.push([cx - w/2 + (w*i/17), cy - h/2 + Math.sin(i/17*Math.PI)*3]);
+        for(let i=0;i<12;i++) pts.push([cx - w/2 + (w*i/11), cy + h/2]);
+        for(let i=0;i<8;i++) pts.push([cx - w/2, cy - h/2 + (h*i/7)]);
+        for(let i=0;i<8;i++) pts.push([cx + w/2, cy - h/2 + (h*i/7)]);
+        pts.forEach(([x,y]) => stars.push([x + (Math.random()*1.4-0.7), y + (Math.random()*1.4-0.7)]));
+      }
+      egg(18, 35, 8, 12, 34);
+      egg(82, 32, 10, 14, 40);
+      egg(72, 72, 8, 12, 34);
+      kulich(34, 72, 18, 24);
+      for(let i=0;i<120;i++) stars.push([Math.random()*100, Math.random()*100]);
+      stars.forEach(([x,y]) => {
+        const s = document.createElement('div');
+        s.className='star';
+        const size = 1 + Math.random()*1.9;
+        s.style.width = size + 'px'; s.style.height = size + 'px';
+        s.style.left = x + '%'; s.style.top = y + '%';
+        s.style.animationDelay = (Math.random()*1.4) + 's';
+        s.style.animationDuration = (0.9 + Math.random()*0.7) + 's';
+        wrap.appendChild(s);
+      });
+    }
+
+    function runSplash(){
+      const start = Date.now();
+      setText('splashTitle', ui().splashTitle); setText('splashSub', ui().splashSub);
+      const loadingText = document.getElementById('loadingText'); loadingText.textContent = ui().loading[0];
+      const textTimer = setInterval(()=>{ loadingPhraseIndex = (loadingPhraseIndex + 1) % ui().loading.length; loadingText.textContent = ui().loading[loadingPhraseIndex]; }, 420);
+      const bar = document.getElementById('bar'); const splash = document.getElementById('splash');
+      const int = setInterval(()=>{
+        const p = Math.min(100, ((Date.now()-start)/TOTAL_LOADING_TIME)*100);
+        bar.style.width = p + '%';
+        if(p >= 100){
+          clearInterval(int); clearInterval(textTimer);
+          setTimeout(()=>{ splash.style.opacity='0'; setTimeout(()=> splash.remove(), 260); }, 120);
+        }
+      }, 45);
+    }
+
+    function applyLanguage(){
+      const L = ui();
+      document.documentElement.lang = state.language;
+      setText('splashTitle', L.splashTitle); setText('splashSub', L.splashSub); setText('brandTitle', L.brandTitle); setText('seasonLabel', L.season);
+      setText('heroTag', L.heroTag); setText('heroTitle', L.heroTitle); setText('heroText', L.heroText);
+      setText('metricOwnedLabel', L.metricOwned); setText('metricSpinsLabel', L.metricSpins); setText('metricRareLabel', L.metricRare);
+      setText('tabHome', L.tabHome); setText('tabInventory', L.tabInventory); setText('tabRules', L.tabRules);
+      setText('walletAccessTitle', L.walletAccessTitle); setText('walletAccessSub', L.walletAccessSub); setText('walletStatusLabel', L.walletStatus); setText('refreshInventoryBtn', L.refreshInventory); setText('goInventoryBtn', L.goInventory);
+      setText('selectedBunnyTitle', L.selectedBunnyTitle); setText('selectedBunnyMeta', L.selectedBunnyMeta); setText('spinBtn', L.spin); setText('poolTitle', L.poolTitle); setText('poolMeta', L.poolMeta); setText('openPrizesBtn', L.openAll);
+      setText('inventoryTitle', L.inventoryTitle); setText('inventorySub', L.inventorySub);
+      setText('rulesTitle', L.rulesTitle); setHTML('rule1', L.rule1); setHTML('rule2', L.rule2); setHTML('rule3', L.rule3); setHTML('rule4', L.rule4); setText('resetBtn', L.resetSeason); setText('historyTitle', L.historyTitle);
+      setText('spinSheetTitle', L.spinSheetTitle); setText('startSpinBtn', L.startSpin); setText('prizeSheetTitle', L.prizeSheetTitle);
+      setText('profileTitle', L.profileTitle); setText('profileWalletLabel', L.profileWalletLabel); setText('profileHistoryTitle', L.profileHistoryTitle);
+      setText('adminTitle', L.adminTitle); setText('adminCardTitle', L.adminCardTitle); setText('adminCardSub', L.adminCardSub);
+      document.getElementById('langBtn').textContent = L.langBtn;
+      updateUI();
     }
 
     async function fetchOwnedBunnies(ownerAddress){
@@ -224,249 +309,226 @@
       url.searchParams.set('owner_address', ownerAddress);
       url.searchParams.set('collection_address', COLLECTION_ADDRESS);
       url.searchParams.set('include_on_sale', 'true');
-      url.searchParams.set('limit', '100');
-      url.searchParams.set('offset', '0');
-      const res = await fetch(url.toString(), { headers: { 'accept': 'application/json' } });
+      url.searchParams.set('limit', '100'); url.searchParams.set('offset', '0');
+      const res = await fetch(url.toString(), { headers:{ 'accept':'application/json' } });
       if(!res.ok) throw new Error('NFT fetch failed');
       const data = await res.json();
       const items = Array.isArray(data.nft_items) ? data.nft_items : [];
-      return items.sort((a,b)=>Number(a.index)-Number(b.index)).map(item => {
-        const md = item.metadata || item.content || {};
-        const image = md.image || md.image_url || md.preview || '';
-        return {
-          id: item.address,
-          index: String(item.index ?? ''),
-          name: md.name || `Degen Bunny #${item.index}`,
-          trait: md.description || 'Degen Bunny holder NFT',
-          art: '🐰',
-          image,
-          owner: item.owner_address || ownerAddress,
-          collectionAddress: item.collection_address || COLLECTION_ADDRESS,
-          registry: getBunnyRegistry(item.index)
-        };
-      });
+      return items.sort((a,b)=>Number(a.index)-Number(b.index)).map(item => mapItem(item, ownerAddress));
+    }
+
+    async function fetchCollectionBunnies(){
+      const url = new URL('https://toncenter.com/api/v3/nft/items');
+      url.searchParams.set('collection_address', COLLECTION_ADDRESS);
+      url.searchParams.set('include_on_sale', 'true');
+      url.searchParams.set('limit', '100'); url.searchParams.set('offset', '0');
+      const res = await fetch(url.toString(), { headers:{ 'accept':'application/json' } });
+      if(!res.ok) throw new Error('Collection fetch failed');
+      const data = await res.json();
+      const items = Array.isArray(data.nft_items) ? data.nft_items : [];
+      return items.sort((a,b)=>Number(a.index)-Number(b.index)).map(item => mapItem(item, item.owner_address || ''));
+    }
+
+    function mapItem(item, ownerAddress){
+      const md = item.metadata || item.content || {};
+      const desc = md.description || '';
+      const metaHint = /every year|annual|easter raffle/i.test(desc) ? desc : '';
+      return {
+        id: item.address,
+        index: String(item.index ?? ''),
+        name: md.name || `Degen Bunny #${item.index}`,
+        trait: desc || 'Degen Bunny holder NFT',
+        metaHint,
+        image: resolveAssetUrl(md.image || md.image_url || md.preview || ''),
+        owner: item.owner_address || ownerAddress,
+        collectionAddress: item.collection_address || COLLECTION_ADDRESS
+      };
     }
 
     async function refreshInventory(){
-      if(!state.connected || !state.wallet){ showToast('Connect wallet first'); return; }
-      const btn = document.getElementById('refreshInventoryBtn');
-      const prev = btn.textContent;
-      btn.textContent = 'Loading...'; btn.disabled = true;
+      if(!state.connected || !state.wallet){ showToast(ui().walletFirst); return; }
+      const btn = document.getElementById('refreshInventoryBtn'); const prev = btn.textContent;
+      btn.textContent = ui().loading; btn.disabled = true;
       try {
         const items = await fetchOwnedBunnies(state.wallet);
         state.ownedBunnies = items;
         if(state.selectedBunnyId && !items.some(i => i.id === state.selectedBunnyId)) state.selectedBunnyId = null;
-        saveState(); updateUI();
-        showToast(items.length ? `Loaded ${items.length} Bunny` : 'No Bunny found in this wallet');
-      } catch (e) {
-        console.error(e);
-        showToast('Failed to load NFT inventory');
-      } finally { btn.textContent = prev; btn.disabled = false; }
+        saveState(); updateUI(); showToast(ui().refreshLoaded(items.length));
+      } catch (e) { console.error(e); showToast(ui().inventoryFailed); }
+      finally { btn.textContent = prev; btn.disabled = false; }
+    }
+
+    async function refreshCollection(){
+      try { state.collectionBunnies = await fetchCollectionBunnies(); saveState(); if(state.isAdmin) renderAdmin(); }
+      catch (e) { console.error(e); }
     }
 
     function selectBunny(id){
-      const bunny = state.ownedBunnies.find(b => b.id === id);
-      if(!bunny) return;
-      const reg = getBunnyRegistry(bunny.index);
-      if(reg.status === 'used'){ showToast('This Bunny is already marked used'); return; }
-      if(state.walletSpinsUsed >= 3){ showToast('Wallet season limit reached'); return; }
+      const bunny = state.ownedBunnies.find(b => b.id === id); if(!bunny) return;
+      const reg = getRegistry(bunny.index);
+      if(reg.status === 'used'){ showToast(ui().alreadyUsed); return; }
+      if(state.walletSpinsUsed >= 3){ showToast(ui().walletLimitReached); return; }
       state.selectedBunnyId = id; saveState(); updateUI();
     }
 
     function updateSelectedBox(){
       const bunny = getSelectedBunny();
-      const art = document.getElementById('selectedArt');
-      const name = document.getElementById('selectedName');
-      const sub = document.getElementById('selectedSub');
-      const spinBtn = document.getElementById('spinBtn');
-      if(!bunny){ art.innerHTML='?'; name.textContent='No Bunny selected'; sub.textContent='Open inventory and pick your Bunny'; spinBtn.disabled=true; return; }
-      art.innerHTML = bunny.image ? `<img src="${bunny.image}" alt="${bunny.name}">` : bunny.art;
-      name.textContent = bunny.name;
-      const reg = getBunnyRegistry(bunny.index);
-      sub.textContent = reg.status === 'used' ? `Bunny #${bunny.index} is already marked as used for this season` : `Bunny #${bunny.index} is ready for spin`;
-      spinBtn.disabled = !state.connected || state.walletSpinsUsed >= 3 || reg.status === 'used';
+      const art = document.getElementById('selectedArt'); const quote = document.getElementById('selectedQuote');
+      if(!bunny){ art.innerHTML='?'; setText('selectedName', ui().noBunnySelected); setText('selectedSub', ui().openInventoryHint); quote.classList.add('hidden'); document.getElementById('spinBtn').disabled = true; return; }
+      art.innerHTML = bunny.image ? `<img src="${bunny.image}" alt="${escapeHtml(bunny.name)}">` : '🐰';
+      setText('selectedName', bunny.name);
+      const reg = getRegistry(bunny.index);
+      setText('selectedSub', reg.status === 'used' ? ui().bunnyUsed(bunny.index) : ui().bunnyReady(bunny.index));
+      if(bunny.metaHint){ quote.classList.remove('hidden'); quote.innerHTML = `<strong>${ui().metadataQuote}:</strong> ${escapeHtml(bunny.metaHint)}`; } else quote.classList.add('hidden');
+      document.getElementById('spinBtn').disabled = !state.connected || state.walletSpinsUsed >= 3 || reg.status === 'used';
     }
 
     function renderInventory(){
-      const grid = document.getElementById('bunnyGrid');
-      grid.innerHTML = '';
-      if(!state.connected){ grid.innerHTML = `<div class="cardSub">Connect wallet first to load Bunny from collection.</div>`; document.getElementById('inventoryMeta').textContent='0 items'; return; }
-      if(!state.ownedBunnies.length){ grid.innerHTML = `<div class="cardSub">No Bunny loaded yet. Use Refresh inventory after wallet connection.</div>`; document.getElementById('inventoryMeta').textContent='0 items'; return; }
+      const grid = document.getElementById('bunnyGrid'); grid.innerHTML = '';
+      if(!state.connected){ grid.innerHTML = `<div class="cardSub">${ui().inventoryConnectFirst}</div>`; setText('inventoryMeta', ui().inventoryItems(0)); return; }
+      if(!state.ownedBunnies.length){ grid.innerHTML = `<div class="cardSub">${ui().inventoryEmpty}</div>`; setText('inventoryMeta', ui().inventoryItems(0)); return; }
       state.ownedBunnies.forEach(bunny => {
-        const reg = getBunnyRegistry(bunny.index);
+        const reg = getRegistry(bunny.index);
         const card = document.createElement('div');
         card.className = 'bunny' + (state.selectedBunnyId === bunny.id ? ' selected' : '') + (reg.status === 'used' ? ' used' : '');
         card.innerHTML = `
           <div class="bunnyHead">
-            <div class="bunnyId">#${bunny.index}</div>
-            <div class="badge ${reg.status === 'used' ? 'used' : reg.status === 'review' ? 'review' : 'available'}">${reg.status === 'used' ? 'USED' : reg.status === 'review' ? 'REVIEW' : 'AVAILABLE'}</div>
+            <div class="bunnyId">#${escapeHtml(bunny.index)}</div>
+            <div class="badge ${reg.status === 'used' ? 'used' : reg.status === 'review' ? 'review' : 'available'}">${ui().statusMap[reg.status]}</div>
           </div>
-          <div class="bunnyArt">${bunny.image ? `<img src="${bunny.image}" alt="${bunny.name}">` : bunny.art}</div>
-          <div class="bunnyName">${bunny.name}</div>
-          <div class="bunnyMeta">${bunny.trait ? bunny.trait : 'Degen Bunny holder NFT'}</div>
-        `;
-        card.addEventListener('click', ()=>selectBunny(bunny.id));
-        grid.appendChild(card);
+          <div class="bunnyArt">${bunny.image ? `<img src="${bunny.image}" alt="${escapeHtml(bunny.name)}">` : '🐰'}</div>
+          <div class="bunnyName">${escapeHtml(bunny.name)}</div>
+          <div class="bunnyMeta">${escapeHtml(bunny.metaHint || bunny.trait || 'Degen Bunny holder NFT')}</div>`;
+        card.addEventListener('click', ()=> selectBunny(bunny.id)); grid.appendChild(card);
       });
-      document.getElementById('inventoryMeta').textContent = `${state.ownedBunnies.length} items`;
+      setText('inventoryMeta', ui().inventoryItems(state.ownedBunnies.length));
     }
 
     function renderPrizes(){
-      const list = document.getElementById('prizeList'); const preview = document.getElementById('rarePreview');
-      list.innerHTML=''; preview.innerHTML='';
+      const list = document.getElementById('prizeList'); const preview = document.getElementById('rarePreview'); list.innerHTML=''; preview.innerHTML='';
       state.prizes.forEach(prize => {
+        const name = prize.publicName || '—';
         const node = document.createElement('div'); node.className='prize';
-        node.innerHTML = `<div class="prizeIcon">${prize.icon}</div><div><div class="prizeName">${prize.name}</div><div class="prizeMeta">${prize.description}</div></div><div class="prizeCount">${prize.count === 999 ? '∞' : prize.count} left</div>`;
+        node.innerHTML = `<div class="prizeIcon">${prize.icon}</div><div><div class="prizeName">${name}</div><div class="prizeMeta">${rarityLabel(prize.rarity)}</div></div><div class="prizeCount">${prize.count === 999 ? ui().infinite : ui().left(prize.count)}</div>`;
         list.appendChild(node);
       });
-      state.prizes.filter(p => p.rarity !== 'Common').forEach(prize => {
+      state.prizes.filter(p => p.rarity !== 'common').forEach(prize => {
         const node = document.createElement('div'); node.className='prize';
-        node.innerHTML = `<div class="prizeIcon">${prize.icon}</div><div><div class="prizeName">${prize.name}</div><div class="prizeMeta">${prize.rarity}</div></div><div class="prizeCount">${prize.count}</div>`;
+        node.innerHTML = `<div class="prizeIcon">${prize.icon}</div><div><div class="prizeName">—</div><div class="prizeMeta">${rarityLabel(prize.rarity)}</div></div><div class="prizeCount">${prize.count === 999 ? ui().infinite : prize.count}</div>`;
         preview.appendChild(node);
       });
-      document.getElementById('metricRare').textContent = getRareLeft();
+      setText('metricRare', String(getRareLeft()));
     }
 
     function renderHistory(){
       const targets = [document.getElementById('historyList'), document.getElementById('profileHistory')];
       targets.forEach(target => {
         target.innerHTML='';
-        if(!state.history.length){ target.innerHTML = `<div class="cardSub">No spins yet.</div>`; return; }
+        if(!state.history.length){ target.innerHTML = `<div class="cardSub">${ui().noHistory}</div>`; return; }
         [...state.history].reverse().forEach(item => {
           const node = document.createElement('div'); node.className='history';
-          node.innerHTML = `<div class="historyTop"><div class="historyName">${item.bunnyName}</div><div class="historyTime">${new Date(item.time).toLocaleString()}</div></div><div class="historyPrize">Won: ${item.prizeName}</div>`;
+          node.innerHTML = `<div class="historyTop"><div class="historyName">${escapeHtml(item.bunnyName)}</div><div class="historyTime">${formatTime(item.time)}</div></div><div class="historyPrize">${ui().won}: ${escapeHtml(item.prizeLabel)}</div>`;
           target.appendChild(node);
         });
       });
     }
 
     function renderAdmin(){
-      const adminList = document.getElementById('adminList');
-      adminList.innerHTML = '';
-      for(let i=0;i<55;i++){
-        const idx = String(i); const reg = getBunnyRegistry(idx);
+      const adminList = document.getElementById('adminList'); adminList.innerHTML = '';
+      const source = state.collectionBunnies.length ? state.collectionBunnies : Array.from({length:55}, (_,i)=>({ index:String(i), name:`Degen Bunny #${i}`, image:'', trait:'' }));
+      source.forEach(bunny => {
+        const reg = getRegistry(bunny.index); const usage = state.history.filter(h => String(h.bunnyIndex) === String(bunny.index)); const last = usage[usage.length - 1];
         const row = document.createElement('div'); row.className='adminRow';
         row.innerHTML = `
-          <div class="adminTop"><div><div class="adminTitle">Degen Bunny #${idx}</div><div class="adminMeta">Current status: ${reg.status}${reg.prize ? ` · Prize: ${reg.prize}` : ''}</div></div><div class="badge ${reg.status === 'used' ? 'used' : reg.status === 'review' ? 'review' : 'available'}">${reg.status.toUpperCase()}</div></div>
-          <div class="adminControls">
-            <select class="field" data-status="${idx}">
-              <option value="available" ${reg.status === 'available' ? 'selected' : ''}>available</option>
-              <option value="review" ${reg.status === 'review' ? 'selected' : ''}>review</option>
-              <option value="used" ${reg.status === 'used' ? 'selected' : ''}>used</option>
-            </select>
-            <input class="field" data-prize="${idx}" value="${reg.prize || ''}" placeholder="Prize / tag" />
+          <div class="adminTop">
+            <div class="adminThumb">${bunny.image ? `<img src="${bunny.image}" alt="${escapeHtml(bunny.name)}">` : '🐰'}</div>
+            <div><div class="adminTitle">${escapeHtml(bunny.name || ('Degen Bunny #' + bunny.index))}</div><div class="adminMeta">${ui().adminMeta(ui()['status' + reg.status.charAt(0).toUpperCase() + reg.status.slice(1)] || reg.status, reg.spunPrize || reg.prize || (last && last.prizeLabel) || '', reg.spunAt ? formatTime(reg.spunAt) : (last ? formatTime(last.time) : ''))}</div></div>
+            <div class="badge ${reg.status === 'used' ? 'used' : reg.status === 'review' ? 'review' : 'available'}">${ui().statusMap[reg.status]}</div>
           </div>
-          <textarea class="field noteField" rows="2" data-note="${idx}" placeholder="Admin note">${reg.note || ''}</textarea>
-        `;
+          <div class="adminControls">
+            <select class="field" data-status="${escapeHtml(String(bunny.index))}">
+              <option value="available" ${reg.status === 'available' ? 'selected' : ''}>${ui().statusAvailable}</option>
+              <option value="review" ${reg.status === 'review' ? 'selected' : ''}>${ui().statusReview}</option>
+              <option value="used" ${reg.status === 'used' ? 'selected' : ''}>${ui().statusUsed}</option>
+            </select>
+            <input class="field" data-prize="${escapeHtml(String(bunny.index))}" value="${escapeAttr(reg.prize || '')}" placeholder="${ui().adminPrizePlaceholder}" />
+          </div>
+          <textarea class="field noteField" rows="2" data-note="${escapeHtml(String(bunny.index))}" placeholder="${ui().adminNotePlaceholder}">${escapeHtml(reg.note || '')}</textarea>`;
         adminList.appendChild(row);
-      }
-      adminList.querySelectorAll('[data-status]').forEach(el => el.addEventListener('change', e => { setBunnyRegistry(e.target.dataset.status, { status: e.target.value }); syncOwnedRegistries(); updateUI(); }));
-      adminList.querySelectorAll('[data-prize]').forEach(el => el.addEventListener('change', e => { setBunnyRegistry(e.target.dataset.prize, { prize: e.target.value }); syncOwnedRegistries(); updateUI(); }));
-      adminList.querySelectorAll('[data-note]').forEach(el => el.addEventListener('change', e => { setBunnyRegistry(e.target.dataset.note, { note: e.target.value }); syncOwnedRegistries(); updateUI(); }));
-    }
-
-    function syncOwnedRegistries(){
-      state.ownedBunnies = state.ownedBunnies.map(b => ({ ...b, registry: getBunnyRegistry(b.index) }));
-      saveState();
+      });
+      adminList.querySelectorAll('[data-status]').forEach(el => el.addEventListener('change', e => { setRegistry(e.target.dataset.status, { status: e.target.value }); updateUI(); }));
+      adminList.querySelectorAll('[data-prize]').forEach(el => el.addEventListener('change', e => { setRegistry(e.target.dataset.prize, { prize: e.target.value }); updateUI(); }));
+      adminList.querySelectorAll('[data-note]').forEach(el => el.addEventListener('change', e => { setRegistry(e.target.dataset.note, { note: e.target.value }); updateUI(); }));
     }
 
     function updateAccessUI(){
-      document.getElementById('walletValue').textContent = state.connected ? state.wallet : 'Not connected';
-      document.getElementById('profileWallet').textContent = state.connected ? state.wallet : 'Not connected';
-      document.getElementById('ownedPill').textContent = `Owned: ${state.ownedBunnies.length}`;
-      document.getElementById('profileOwned').textContent = `Owned: ${state.ownedBunnies.length}`;
-      document.getElementById('metricOwned').textContent = state.ownedBunnies.length;
-      document.getElementById('metricSpins').textContent = `${state.walletSpinsUsed} / 3`;
-      document.getElementById('profileSpins').textContent = `Spins: ${state.walletSpinsUsed} / 3`;
-      const selected = getSelectedBunny();
-      document.getElementById('selectedPill').textContent = selected ? `Selected: #${selected.index}` : 'Selected: none';
-      document.getElementById('adminBtn').classList.toggle('hidden', !state.isAdmin);
-      document.getElementById('adminPill').classList.toggle('hidden', !state.isAdmin);
-      document.getElementById('adminPill').classList.toggle('good', state.isAdmin);
-      if(state.isAdmin) document.getElementById('adminPill').textContent = 'Admin access';
+      setText('walletValue', state.connected ? state.wallet : ui().notConnected); setText('profileWallet', state.connected ? state.wallet : ui().notConnected);
+      setText('ownedPill', ui().ownedPill(state.ownedBunnies.length)); setText('profileOwned', ui().ownedPill(state.ownedBunnies.length));
+      setText('metricOwned', String(state.ownedBunnies.length)); setText('metricSpins', `${state.walletSpinsUsed} / 3`); setText('profileSpins', ui().spinsProfile(state.walletSpinsUsed)); setText('profileSeason', ui().profileSeason);
+      const selected = getSelectedBunny(); setText('selectedPill', ui().selectedPill(selected ? '#' + selected.index : '—')); setText('limitPill', ui().limitPill);
+      document.getElementById('adminBtn').classList.toggle('hidden', !state.isAdmin); document.getElementById('resetBtn').classList.toggle('hidden', !state.isAdmin); document.getElementById('adminPill').classList.toggle('hidden', !state.isAdmin);
+      if(state.isAdmin){ document.getElementById('adminPill').classList.add('good'); setText('adminPill', ui().adminAccess); }
     }
 
     function updateUI(){ updateAccessUI(); renderInventory(); updateSelectedBox(); renderPrizes(); renderHistory(); if(state.isAdmin) renderAdmin(); saveState(); }
 
+    function choosePrize(){
+      const available = state.prizes.filter(p => p.count > 0 || p.count === 999); const total = available.reduce((sum,p)=>sum+p.weight,0); let roll = Math.random()*total;
+      for(const prize of available){ roll -= prize.weight; if(roll <= 0){ if(prize.count !== 999) prize.count -= 1; return prize; } }
+      return available[available.length - 1];
+    }
+
     async function handleWalletConnected(accountAddress){
       const normalized = normalizeAddress(accountAddress);
-      state.connected = true;
-      state.wallet = normalized?.bounceable || accountAddress;
-      state.walletRaw = normalized?.raw || accountAddress;
-      state.isAdmin = isAdminWallet(accountAddress);
-      if(state.isAdmin) showToast('Admin wallet detected');
-      await refreshInventory();
-      updateUI();
+      state.connected = true; state.wallet = normalized?.bounceable || accountAddress; state.walletRaw = normalized?.raw || accountAddress; state.isAdmin = isAdminWallet(accountAddress);
+      if(state.isAdmin) showToast(ui().adminDetected);
+      await refreshInventory(); if(state.isAdmin) refreshCollection(); updateUI();
     }
 
     function resetSeason(){
-      state = createDefaultState();
-      saveState();
-      if(tonConnectUI && tonConnectUI.wallet?.account?.address){
-        handleWalletConnected(tonConnectUI.wallet.account.address);
-      } else {
-        updateUI();
-      }
-      showToast('Local season reset');
+      const lang = state.language; state = createDefaultState(); state.language = lang; saveState();
+      if(tonConnectUI?.wallet?.account?.address){ handleWalletConnected(tonConnectUI.wallet.account.address); } else { updateUI(); }
+      showToast(ui().resetDone);
     }
 
+    function openOverlay(id){ document.getElementById(id).classList.add('show'); }
+    function closeOverlay(id){ document.getElementById(id).classList.remove('show'); }
+
     function startSpinFlow(){
-      const bunny = getSelectedBunny();
-      if(!bunny){ showToast('Select Bunny first'); return; }
-      const reg = getBunnyRegistry(bunny.index);
-      if(reg.status === 'used'){ showToast('This Bunny is already marked used'); return; }
-      if(state.walletSpinsUsed >= 3){ showToast('Wallet season limit reached'); return; }
-      document.getElementById('spinBunnyLabel').textContent = `${bunny.name} · #${bunny.index}`;
-      document.getElementById('resultBox').classList.remove('show');
-      document.getElementById('spinText').textContent = 'Ready';
-      document.getElementById('spinSub').textContent = 'Press start when your Bunny is selected';
-      openOverlay('spinOverlay');
+      const bunny = getSelectedBunny(); if(!bunny){ showToast(ui().selectFirst); return; }
+      const reg = getRegistry(bunny.index); if(reg.status === 'used'){ showToast(ui().alreadyUsed); return; } if(state.walletSpinsUsed >= 3){ showToast(ui().walletLimitReached); return; }
+      setText('spinSelectedLabel', ui().spinSelectedLabel(`${bunny.name} · #${bunny.index}`)); setText('spinText', ui().spinReady); setText('spinSub', ui().spinReadySub); document.getElementById('resultBox').classList.remove('show'); openOverlay('spinOverlay');
     }
 
     function runSpin(){
-      if(spinning) return;
-      const bunny = getSelectedBunny(); if(!bunny) return;
-      spinning = true;
-      const spinText = document.getElementById('spinText'); const spinSub = document.getElementById('spinSub');
-      const resultBox = document.getElementById('resultBox'); resultBox.classList.remove('show');
-      const words = ['Charging','Rolling','Scanning','Locking','Opening']; let i = 0;
-      spinTimer = setInterval(()=>{ spinText.textContent = words[i % words.length] + '...'; spinSub.textContent = `Bunny #${bunny.index} is in the chamber`; i++; }, 220);
+      if(spinning) return; const bunny = getSelectedBunny(); if(!bunny) return;
+      spinning = true; const spinText = document.getElementById('spinText'); const spinSub = document.getElementById('spinSub'); const resultBox = document.getElementById('resultBox'); resultBox.classList.remove('show');
+      const words = ui().spinWords; let i = 0;
+      spinTimer = setInterval(()=>{ spinText.textContent = words[i % words.length] + '...'; spinSub.textContent = ui().spinChamber(bunny.index); i++; }, 220);
       setTimeout(()=>{
         clearInterval(spinTimer);
-        const prize = choosePrize();
-        state.walletSpinsUsed += 1;
-        state.bunnyUsage[bunny.id] = { seasonId: SEASON_ID, prizeId: prize.id, time: new Date().toISOString() };
-        setBunnyRegistry(bunny.index, { status: 'used', prize: prize.name });
-        state.history.push({ bunnyId: bunny.id, bunnyName: bunny.name, bunnyIndex: bunny.index, prizeId: prize.id, prizeName: prize.name, time: new Date().toISOString() });
-        syncOwnedRegistries();
-        document.getElementById('resultIcon').textContent = prize.icon;
-        document.getElementById('resultTitle').textContent = prize.name;
-        document.getElementById('resultMeta').textContent = `Bunny #${bunny.index} is now marked as used for ${SEASON_ID}.`;
-        resultBox.classList.add('show');
-        document.getElementById('spinText').textContent = 'Reward locked';
-        document.getElementById('spinSub').textContent = 'Saved locally. Backend verification can be added next.';
-        spinning = false; updateUI(); showToast(`${prize.name} won`);
+        const prize = choosePrize(); const prizeLabel = getPrizeLabel(prize);
+        state.walletSpinsUsed += 1; state.bunnyUsage[bunny.id] = { seasonId:SEASON_ID, prizeId:prize.id, time:new Date().toISOString() };
+        setRegistry(bunny.index, { spunPrize: prizeLabel, spunAt: new Date().toISOString() });
+        state.history.push({ bunnyId:bunny.id, bunnyName:bunny.name, bunnyIndex:bunny.index, prizeId:prize.id, prizeLabel, time:new Date().toISOString() });
+        document.getElementById('resultIcon').textContent = prize.icon; setText('resultTitle', prizeLabel); setText('resultMeta', ui().resultSaved); resultBox.classList.add('show'); setText('spinText', ui().resultLocked); setText('spinSub', ui().resultSaved);
+        spinning = false; updateUI(); showToast(ui().rewardWon(prizeLabel));
       }, 1900);
     }
 
-    function setActiveTab(screenId){
-      document.querySelectorAll('.tab').forEach(tab => tab.classList.toggle('active', tab.dataset.screen === screenId));
-      document.querySelectorAll('.screen').forEach(screen => screen.classList.toggle('active', screen.id === screenId));
-    }
+    function setActiveTab(screenId){ document.querySelectorAll('.tab').forEach(tab => tab.classList.toggle('active', tab.dataset.screen === screenId)); document.querySelectorAll('.screen').forEach(screen => screen.classList.toggle('active', screen.id === screenId)); }
 
     async function setupTonConnect(){
       tonConnectUI = new TonConnectUI({ manifestUrl: MANIFEST_URL, buttonRootId: 'ton-connect' });
       tonConnectUI.onStatusChange(async wallet => {
-        if(wallet?.account?.address){
-          await handleWalletConnected(wallet.account.address);
-        } else {
-          state.connected = false; state.wallet = null; state.walletRaw = null; state.isAdmin = false; state.ownedBunnies = []; state.selectedBunnyId = null; saveState(); updateUI();
-        }
+        if(wallet?.account?.address){ await handleWalletConnected(wallet.account.address); }
+        else { state.connected=false; state.wallet=null; state.walletRaw=null; state.isAdmin=false; state.ownedBunnies=[]; state.selectedBunnyId=null; saveState(); updateUI(); }
       });
-      if(tonConnectUI.wallet?.account?.address){
-        await handleWalletConnected(tonConnectUI.wallet.account.address);
-      }
+      if(tonConnectUI.wallet?.account?.address){ await handleWalletConnected(tonConnectUI.wallet.account.address); }
     }
+
+    function escapeHtml(s){ return String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+    function escapeAttr(s){ return escapeHtml(s); }
 
     document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', ()=> setActiveTab(tab.dataset.screen)));
     document.querySelectorAll('[data-close]').forEach(btn => btn.addEventListener('click', ()=> closeOverlay(btn.dataset.close)));
@@ -479,9 +541,10 @@
     document.getElementById('spinBtn').addEventListener('click', startSpinFlow);
     document.getElementById('startSpinBtn').addEventListener('click', runSpin);
     document.getElementById('resetBtn').addEventListener('click', resetSeason);
+    document.getElementById('langBtn').addEventListener('click', ()=>{ state.language = state.language === 'ru' ? 'en' : 'ru'; saveState(); applyLanguage(); });
     document.querySelectorAll('.overlay').forEach(ov => ov.addEventListener('click', (e)=> { if(e.target === ov) ov.classList.remove('show'); }));
 
-    createStars(); runSplash(); updateUI(); setupTonConnect().catch(err => { console.error(err); showToast('TON Connect init failed'); });
+    createSplashStars(); applyLanguage(); runSplash(); updateUI(); setupTonConnect().catch(err => { console.error(err); showToast('TON Connect init failed'); });
   </script>
 </body>
 </html>
