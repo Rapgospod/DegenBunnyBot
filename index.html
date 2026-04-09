@@ -1,543 +1,750 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-  />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
   <title>Degen Bunny Easter Spin</title>
-
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
   <style>
-    :root {
-      --bg: #0b0b12;
-      --bg-soft: #151522;
-      --card: rgba(255, 255, 255, 0.06);
-      --card-border: rgba(255, 255, 255, 0.08);
-      --text: #ffffff;
-      --muted: #b8b8c7;
-      --purple: #7b3cff;
-      --purple-2: #9b6cff;
-      --gold: #ffd54f;
-      --danger: #ff6b6b;
-      --success: #58d68d;
-      --shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
-      --radius: 22px;
+    :root{
+      --bg:#08070c;
+      --bg2:#100d18;
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.03);
+      --stroke:rgba(255,255,255,.11);
+      --text:#f8f7ff;
+      --muted:#b8b3d1;
+      --purple:#9b5cff;
+      --cyan:#56e4ff;
+      --gold:#ffcf55;
+      --red:#ff5f75;
+      --green:#58f0b4;
+      --shadow:0 18px 50px rgba(0,0,0,.45);
     }
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;background:
+      radial-gradient(900px 520px at 50% -10%, rgba(155,92,255,.22), transparent 60%),
+      radial-gradient(700px 450px at 92% 10%, rgba(86,228,255,.14), transparent 55%),
+      radial-gradient(900px 700px at 10% 100%, rgba(155,92,255,.10), transparent 60%),
+      linear-gradient(180deg,var(--bg),var(--bg2));
+      color:var(--text);font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;overflow-x:hidden}
+    body{padding:14px 14px 100px;display:flex;justify-content:center}
+    button,input{font:inherit}
+    .app{width:min(470px,100%);position:relative}
 
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+    #splash{position:fixed;inset:0;z-index:999;background:
+      radial-gradient(700px 400px at 50% 10%, rgba(155,92,255,.20), transparent 60%),
+      linear-gradient(180deg,#08070c,#0b0a10 55%,#09070c);display:flex;align-items:center;justify-content:center;overflow:hidden;transition:opacity .28s ease}
+    .stars{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+    .star{position:absolute;background:#fff;border-radius:50%;box-shadow:0 0 10px rgba(255,255,255,1),0 0 20px rgba(255,255,255,.85),0 0 36px rgba(155,92,255,.48);animation:twinkle 1s infinite ease-in-out;opacity:.28}
+    @keyframes twinkle{0%,100%{transform:scale(.68);opacity:.25}50%{transform:scale(1.85);opacity:1}}
+    .splashBox{position:relative;z-index:2;text-align:center;width:min(290px,82vw)}
+    .logoOrb{width:122px;height:122px;margin:0 auto 20px;border-radius:34px;border:1px solid rgba(255,255,255,.13);background:
+      radial-gradient(circle at 30% 25%, rgba(255,255,255,.14), transparent 40%),
+      linear-gradient(145deg, rgba(155,92,255,.30), rgba(86,228,255,.12));box-shadow:0 18px 70px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.18);display:grid;place-items:center;font-size:54px}
+    .splashTitle{font-weight:900;font-size:24px;letter-spacing:.3px}
+    .splashSub{margin-top:8px;color:var(--muted);font-size:13px}
+    .progress{height:14px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.09);overflow:hidden;margin-top:24px}
+    .bar{height:100%;width:0;background:linear-gradient(90deg,rgba(80,80,92,.5),#fff);border-radius:999px;box-shadow:0 0 24px rgba(255,255,255,.28);transition:width .16s linear}
+    .loadingText{height:18px;margin-top:14px;color:rgba(255,255,255,.84);font-size:13px}
 
-    body {
-      margin: 0;
-      font-family: Inter, Arial, sans-serif;
-      background:
-        radial-gradient(circle at top, rgba(123, 60, 255, 0.22), transparent 30%),
-        radial-gradient(circle at bottom, rgba(255, 213, 79, 0.08), transparent 25%),
-        linear-gradient(180deg, #090910 0%, #10101a 100%);
-      color: var(--text);
-      min-height: 100vh;
-    }
+    .top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;position:sticky;top:0;padding-top:8px;z-index:20;backdrop-filter:blur(10px)}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
+    .brandLogo{width:52px;height:52px;border-radius:18px;flex:0 0 auto;display:grid;place-items:center;background:linear-gradient(145deg, rgba(155,92,255,.26), rgba(86,228,255,.12));border:1px solid var(--stroke);box-shadow:var(--shadow);font-size:25px}
+    .brandTitle{font-weight:900;font-size:17px;line-height:1.05}
+    .brandSub{margin-top:4px;font-size:12px;color:var(--muted)}
+    .topActions{display:flex;gap:8px}
+    .iconBtn{position:relative;width:46px;height:46px;border:none;border-radius:16px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.95);display:grid;place-items:center;box-shadow:0 14px 38px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.12);cursor:pointer}
+    .iconBtn.profile{width:52px;height:52px;border-radius:18px;background:linear-gradient(135deg, rgba(155,92,255,.24), rgba(86,228,255,.14));box-shadow:0 0 22px rgba(155,92,255,.30),0 12px 42px rgba(0,0,0,.30), inset 0 1px 0 rgba(255,255,255,.18)}
+    .iconBtn svg{width:20px;height:20px}
 
-    .app {
-      max-width: 440px;
-      margin: 0 auto;
-      padding: 18px 16px 28px;
-    }
+    .hero{padding:18px;border-radius:26px;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--stroke);box-shadow:var(--shadow);position:relative;overflow:hidden;margin-bottom:12px}
+    .hero::before{content:"";position:absolute;inset:auto -60px -90px auto;width:180px;height:180px;background:radial-gradient(circle, rgba(155,92,255,.25), transparent 65%);filter:blur(10px)}
+    .heroTag{display:inline-flex;align-items:center;gap:8px;padding:8px 11px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);font-size:11px;font-weight:800;color:#fff}
+    .heroTitle{font-size:28px;font-weight:900;line-height:1.02;margin:14px 0 10px}
+    .heroText{font-size:13px;line-height:1.5;color:var(--muted);max-width:330px}
+    .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+    .metric{padding:12px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+    .metricNum{font-size:18px;font-weight:900}
+    .metricLabel{margin-top:4px;color:var(--muted);font-size:11px}
 
-    .hero {
-      padding: 22px 18px;
-      border-radius: 28px;
-      background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.08),
-        rgba(255, 255, 255, 0.03)
-      );
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-    }
+    .tabs{display:flex;gap:8px;padding:8px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid var(--stroke);box-shadow:0 12px 30px rgba(0,0,0,.26);position:sticky;top:76px;z-index:19;margin-bottom:12px;backdrop-filter:blur(10px)}
+    .tab{flex:1;padding:12px 8px;border:none;background:transparent;color:rgba(255,255,255,.74);border-radius:15px;font-size:12px;font-weight:900;cursor:pointer}
+    .tab.active{background:linear-gradient(90deg, rgba(155,92,255,.38), rgba(86,228,255,.18));color:#fff;border:1px solid rgba(255,255,255,.10)}
+    .screen{display:none}
+    .screen.active{display:block}
 
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: -80px auto auto -60px;
-      width: 180px;
-      height: 180px;
-      background: radial-gradient(circle, rgba(123, 60, 255, 0.35), transparent 70%);
-      pointer-events: none;
-    }
+    .card{padding:15px;border-radius:24px;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--stroke);box-shadow:var(--shadow);margin-bottom:12px}
+    .cardTitle{font-size:18px;font-weight:900;margin:0 0 6px}
+    .cardSub{font-size:13px;line-height:1.45;color:var(--muted)}
+    .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .btn{border:none;cursor:pointer;border-radius:18px;padding:13px 16px;font-weight:900;font-size:14px;transition:.16s ease}
+    .btn:active{transform:scale(.98)}
+    .btn.primary{color:#09070c;background:linear-gradient(90deg,var(--purple),var(--cyan));box-shadow:0 16px 44px rgba(155,92,255,.22)}
+    .btn.secondary{color:#fff;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09)}
+    .btn.ghost{color:#fff;background:transparent;border:1px solid rgba(255,255,255,.10)}
+    .btn.full{width:100%}
+    .btn[disabled]{opacity:.45;cursor:not-allowed}
 
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(123, 60, 255, 0.14);
-      border: 1px solid rgba(123, 60, 255, 0.35);
-      color: #e5d8ff;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
+    .walletBox{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:14px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);margin-top:14px}
+    .walletLabel{font-size:12px;color:var(--muted)}
+    .walletValue{font-size:13px;font-weight:800;word-break:break-all;margin-top:5px}
+    .statusPills{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+    .pill{padding:8px 11px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);font-size:11px;font-weight:800}
+    .pill.good{color:#dbfff1;border-color:rgba(88,240,180,.26);background:rgba(88,240,180,.10)}
+    .pill.warn{color:#fff3cc;border-color:rgba(255,207,85,.24);background:rgba(255,207,85,.10)}
+    .pill.bad{color:#ffe5ea;border-color:rgba(255,95,117,.24);background:rgba(255,95,117,.10)}
 
-    h1 {
-      margin: 16px 0 10px;
-      font-size: 30px;
-      line-height: 1.05;
-      letter-spacing: -0.04em;
-    }
+    .sectionHead{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:2px 0 12px}
+    .sectionTitle{font-size:20px;font-weight:900}
+    .sectionMeta{font-size:12px;color:var(--muted)}
 
-    .hero p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.5;
-      font-size: 15px;
-    }
+    .bunnyGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .bunny{border-radius:22px;padding:12px;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.09);position:relative;overflow:hidden;cursor:pointer;box-shadow:0 14px 34px rgba(0,0,0,.24)}
+    .bunny::before{content:"";position:absolute;inset:auto -40px -65px auto;width:140px;height:140px;background:radial-gradient(circle, rgba(155,92,255,.22), transparent 60%)}
+    .bunny.selected{border-color:rgba(86,228,255,.42);box-shadow:0 0 0 1px rgba(86,228,255,.34), 0 14px 34px rgba(0,0,0,.24)}
+    .bunny.used{opacity:.58;filter:saturate(.72)}
+    .bunnyHead{display:flex;justify-content:space-between;align-items:center;gap:8px}
+    .bunnyId{font-size:12px;font-weight:900;color:#fff}
+    .badge{padding:6px 9px;border-radius:999px;font-size:10px;font-weight:900;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.06)}
+    .badge.available{color:#dcfff0;background:rgba(88,240,180,.10);border-color:rgba(88,240,180,.24)}
+    .badge.used{color:#ffe5ea;background:rgba(255,95,117,.10);border-color:rgba(255,95,117,.24)}
+    .bunnyArt{margin-top:10px;aspect-ratio:1/1;border-radius:18px;display:grid;place-items:center;font-size:50px;background:
+      radial-gradient(circle at 30% 20%, rgba(255,255,255,.10), transparent 35%),
+      linear-gradient(145deg, rgba(155,92,255,.22), rgba(86,228,255,.08));border:1px solid rgba(255,255,255,.08)}
+    .bunnyName{margin-top:10px;font-size:14px;font-weight:900}
+    .bunnyMeta{margin-top:4px;font-size:11px;color:var(--muted);line-height:1.45}
 
-    .section {
-      margin-top: 18px;
-      padding: 16px;
-      border-radius: var(--radius);
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      backdrop-filter: blur(12px);
-      box-shadow: var(--shadow);
-    }
+    .selectedBox{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px;border-radius:22px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);margin-top:14px}
+    .selectedMain{display:flex;align-items:center;gap:12px}
+    .selectedArt{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(145deg, rgba(155,92,255,.24), rgba(86,228,255,.10));border:1px solid rgba(255,255,255,.10);font-size:28px}
+    .selectedName{font-size:15px;font-weight:900}
+    .selectedSub{margin-top:4px;font-size:12px;color:var(--muted)}
 
-    .section-title {
-      margin: 0 0 10px;
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
+    .prizeList{display:grid;gap:10px;margin-top:12px}
+    .prize{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:12px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+    .prizeIcon{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg, rgba(255,207,85,.20), rgba(255,255,255,.05));font-size:22px}
+    .prizeName{font-size:14px;font-weight:900}
+    .prizeMeta{margin-top:4px;font-size:11px;color:var(--muted)}
+    .prizeCount{padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.06);font-size:11px;font-weight:900}
 
-    .muted {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.45;
-    }
+    .rules{display:grid;gap:10px;margin-top:12px}
+    .rule{padding:12px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);font-size:13px;line-height:1.45;color:#f2f0ff}
+    .rule span{color:var(--cyan);font-weight:900}
 
-    .wallet-box {
-      margin-top: 12px;
-      padding: 14px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      word-break: break-word;
-    }
+    .historyList{display:grid;gap:10px;margin-top:12px}
+    .history{padding:12px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+    .historyTop{display:flex;justify-content:space-between;gap:10px;align-items:center}
+    .historyName{font-size:13px;font-weight:900}
+    .historyTime{font-size:11px;color:var(--muted)}
+    .historyPrize{margin-top:6px;color:#fff;font-size:12px}
 
-    .wallet-label {
-      color: var(--muted);
-      font-size: 12px;
-      margin-bottom: 6px;
-    }
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.48);backdrop-filter:blur(10px);display:none;align-items:flex-end;justify-content:center;padding:14px;z-index:120}
+    .overlay.show{display:flex}
+    .sheet{width:min(470px,100%);max-height:88vh;overflow:auto;border-radius:28px;padding:18px;background:linear-gradient(180deg, rgba(14,12,20,.98), rgba(9,8,12,.98));border:1px solid rgba(255,255,255,.10);box-shadow:0 25px 70px rgba(0,0,0,.48);animation:sheetIn .22s ease both}
+    @keyframes sheetIn{from{transform:translateY(14px);opacity:.72}to{transform:none;opacity:1}}
+    .sheetTop{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+    .sheetTitle{font-size:22px;font-weight:900}
+    .closeBtn{width:42px;height:42px;border:none;border-radius:14px;background:rgba(255,255,255,.08);color:#fff;cursor:pointer}
 
-    .wallet-value {
-      font-size: 14px;
-      font-weight: 700;
-      line-height: 1.4;
-    }
+    .spinStage{padding:18px 12px 14px;border-radius:24px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);text-align:center}
+    .spinner{height:112px;border-radius:24px;background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.08);display:grid;place-items:center;position:relative;overflow:hidden;margin-top:12px}
+    .spinnerGlow{position:absolute;inset:auto 50% -60px auto;transform:translateX(50%);width:180px;height:120px;background:radial-gradient(circle, rgba(155,92,255,.30), transparent 65%)}
+    .spinText{position:relative;z-index:2;font-size:20px;font-weight:900;letter-spacing:.2px}
+    .spinSub{margin-top:8px;color:var(--muted);font-size:12px}
+    .resultBox{margin-top:14px;padding:16px;border-radius:22px;background:linear-gradient(145deg, rgba(155,92,255,.14), rgba(86,228,255,.08));border:1px solid rgba(255,255,255,.10);display:none}
+    .resultBox.show{display:block}
+    .resultIcon{font-size:46px}
+    .resultTitle{margin-top:8px;font-size:23px;font-weight:900}
+    .resultMeta{margin-top:8px;color:var(--muted);font-size:13px;line-height:1.45}
 
-    .buttons {
-      display: grid;
-      gap: 10px;
-      margin-top: 16px;
-    }
+    .toast{position:fixed;left:50%;bottom:42px;transform:translateX(-50%) translateY(20px) scale(.95);padding:16px 24px;border-radius:20px;font-size:15px;font-weight:700;color:#fff;background:linear-gradient(135deg, rgba(155,92,255,.24), rgba(86,228,255,.14));border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(16px);box-shadow:0 12px 42px rgba(0,0,0,.40),inset 0 1px 0 rgba(255,255,255,.18),0 0 25px rgba(155,92,255,.32);opacity:0;pointer-events:none;z-index:200;transition:all .24s ease}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
 
-    button {
-      appearance: none;
-      border: 0;
-      outline: none;
-      cursor: pointer;
-      border-radius: 18px;
-      padding: 15px 16px;
-      font-size: 15px;
-      font-weight: 800;
-      color: white;
-      transition: transform 0.15s ease, opacity 0.15s ease;
-    }
+    .mini{font-size:11px;color:var(--muted)}
+    .divider{height:1px;background:rgba(255,255,255,.07);margin:14px 0}
 
-    button:active {
-      transform: scale(0.985);
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--purple), var(--purple-2));
-      box-shadow: 0 10px 24px rgba(123, 60, 255, 0.35);
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .btn-gold {
-      background: linear-gradient(135deg, #c99a12, var(--gold));
-      color: #151515;
-      box-shadow: 0 10px 24px rgba(255, 213, 79, 0.28);
-    }
-
-    .status {
-      margin-top: 12px;
-      padding: 12px 14px;
-      border-radius: 16px;
-      font-size: 14px;
-      line-height: 1.45;
-    }
-
-    .status.info {
-      background: rgba(123, 60, 255, 0.12);
-      border: 1px solid rgba(123, 60, 255, 0.2);
-      color: #e7dcff;
-    }
-
-    .status.success {
-      background: rgba(88, 214, 141, 0.12);
-      border: 1px solid rgba(88, 214, 141, 0.22);
-      color: #d8ffe8;
-    }
-
-    .status.error {
-      background: rgba(255, 107, 107, 0.12);
-      border: 1px solid rgba(255, 107, 107, 0.22);
-      color: #ffe1e1;
-    }
-
-    .inventory {
-      display: grid;
-      gap: 12px;
-      margin-top: 14px;
-    }
-
-    .bunny-card {
-      padding: 12px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.045);
-      border: 1px solid rgba(255, 255, 255, 0.09);
-      display: grid;
-      grid-template-columns: 76px 1fr;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .bunny-cover {
-      width: 76px;
-      height: 76px;
-      border-radius: 16px;
-      overflow: hidden;
-      background: #1d1d2c;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .bunny-cover img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .bunny-title {
-      font-size: 16px;
-      font-weight: 800;
-      margin-bottom: 6px;
-    }
-
-    .bunny-meta {
-      color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 10px;
-    }
-
-    .tag-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 10px;
-    }
-
-    .tag {
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-    }
-
-    .tag.available {
-      background: rgba(88, 214, 141, 0.12);
-      border: 1px solid rgba(88, 214, 141, 0.22);
-      color: #d8ffe8;
-    }
-
-    .tag.used {
-      background: rgba(255, 107, 107, 0.12);
-      border: 1px solid rgba(255, 107, 107, 0.22);
-      color: #ffe1e1;
-    }
-
-    .tag.lucky {
-      background: rgba(255, 213, 79, 0.12);
-      border: 1px solid rgba(255, 213, 79, 0.22);
-      color: #fff1ba;
-    }
-
-    .mini-btn {
-      width: 100%;
-      padding: 12px;
-      border-radius: 14px;
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .chosen {
-      margin-top: 14px;
-      padding: 14px;
-      border-radius: 18px;
-      background: linear-gradient(
-        180deg,
-        rgba(123, 60, 255, 0.12),
-        rgba(255, 255, 255, 0.03)
-      );
-      border: 1px solid rgba(123, 60, 255, 0.18);
-    }
-
-    .footer-note {
-      margin-top: 16px;
-      text-align: center;
-      color: rgba(255, 255, 255, 0.45);
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    .hidden {
-      display: none !important;
+    @media (max-width:390px){
+      .bunnyGrid{grid-template-columns:1fr}
+      .metrics{grid-template-columns:1fr}
+      .heroTitle{font-size:24px}
+      .tabs{top:74px}
     }
   </style>
 </head>
 <body>
-  <div class="app">
-    <div class="hero">
-      <div class="badge">Degen Bunny • Easter Spin 2026</div>
-      <h1>Choose Your Bunny</h1>
-      <p>
-        Hold a Degen Bunny, pick a specific NFT from your wallet, and enter the
-        seasonal prize event. Each Bunny can participate once per year.
-      </p>
-
-      <div class="buttons">
-        <button id="connectBtn" class="btn-primary">Connect Wallet</button>
-        <button id="loadBtn" class="btn-secondary hidden">Load My Bunnies</button>
-      </div>
-
-      <div id="statusBox" class="status info">
-        Welcome. Connect your TON wallet to continue.
-      </div>
-
-      <div id="walletBox" class="wallet-box hidden">
-        <div class="wallet-label">Connected wallet</div>
-        <div id="walletAddress" class="wallet-value">—</div>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2 class="section-title">Event Rules</h2>
-      <div class="muted">
-        1 Bunny = 1 spin. Maximum 3 spins per wallet. Each Bunny can be used only
-        once per event season and becomes eligible again next year.
-      </div>
-    </div>
-
-    <div class="section">
-      <h2 class="section-title">Your Bunny Inventory</h2>
-      <div class="muted">
-        After wallet connection, your Degen Bunny NFTs will appear here. Then you
-        can choose exactly which Bunny enters the event.
-      </div>
-
-      <div id="inventory" class="inventory"></div>
-
-      <div id="chosenBox" class="chosen hidden">
-        <div class="wallet-label">Selected Bunny</div>
-        <div id="chosenName" class="wallet-value">—</div>
-
-        <div class="buttons">
-          <button id="continueBtn" class="btn-gold">Continue to Spin</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer-note">
-      Premium seasonal event for Degen Bunny holders.
+  <div id="splash">
+    <div class="stars" id="stars"></div>
+    <div class="splashBox">
+      <div class="logoOrb">🐰</div>
+      <div class="splashTitle">Degen Bunny Easter Spin</div>
+      <div class="splashSub">Seasonal event for holders</div>
+      <div class="progress"><div class="bar" id="bar"></div></div>
+      <div class="loadingText" id="loadingText">Charging luck...</div>
     </div>
   </div>
 
+  <div class="app">
+    <div class="top">
+      <div class="brand">
+        <div class="brandLogo">🐰</div>
+        <div>
+          <div class="brandTitle">Degen Bunny Spin</div>
+          <div class="brandSub" id="seasonLabel">Easter Season 2026</div>
+        </div>
+      </div>
+      <div class="topActions">
+        <button class="iconBtn" id="prizeBtn" aria-label="Prizes">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l2.8 5.6 6.2.9-4.5 4.4 1.1 6.1L12 17l-5.6 3 1.1-6.1L3 9.5l6.2-.9L12 3z"/></svg>
+        </button>
+        <button class="iconBtn profile" id="profileBtn" aria-label="Profile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="8" r="4"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="heroTag">🐣 Seasonal NFT Event · 55 Bunny Total</div>
+      <div class="heroTitle">Spin only with your real Bunny</div>
+      <div class="heroText">Choose a specific Degen Bunny from inventory, spin once per Bunny, and chase limited rewards. One Bunny can enter only once per season.</div>
+      <div class="metrics">
+        <div class="metric"><div class="metricNum" id="metricOwned">0</div><div class="metricLabel">Owned Bunny</div></div>
+        <div class="metric"><div class="metricNum" id="metricSpins">0 / 3</div><div class="metricLabel">Wallet Spins</div></div>
+        <div class="metric"><div class="metricNum" id="metricRare">6</div><div class="metricLabel">Rare Rewards Left</div></div>
+      </div>
+    </section>
+
+    <nav class="tabs">
+      <button class="tab active" data-screen="home">Home</button>
+      <button class="tab" data-screen="inventory">Inventory</button>
+      <button class="tab" data-screen="rules">Rules</button>
+    </nav>
+
+    <section class="screen active" id="home">
+      <div class="card">
+        <h2 class="cardTitle">Access</h2>
+        <div class="cardSub">For testing, the wallet step uses a premium demo mode. Later we can replace this block with TON wallet connect and real collection fetch through API.</div>
+        <div class="walletBox">
+          <div>
+            <div class="walletLabel">Wallet status</div>
+            <div class="walletValue" id="walletValue">Not connected</div>
+          </div>
+          <button class="btn primary" id="connectBtn">Demo connect</button>
+        </div>
+        <div class="statusPills">
+          <div class="pill" id="ownedPill">Owned: 0</div>
+          <div class="pill warn" id="limitPill">Wallet limit: 3</div>
+          <div class="pill" id="selectedPill">Selected: none</div>
+        </div>
+        <div class="row">
+          <button class="btn secondary" id="loadDemoBtn">Load demo inventory</button>
+          <button class="btn ghost" id="goInventoryBtn">Open inventory</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="sectionHead">
+          <div>
+            <div class="sectionTitle">Selected Bunny</div>
+            <div class="sectionMeta">Choose one Bunny to start spin</div>
+          </div>
+        </div>
+        <div class="selectedBox" id="selectedBox">
+          <div class="selectedMain">
+            <div class="selectedArt" id="selectedArt">?</div>
+            <div>
+              <div class="selectedName" id="selectedName">No Bunny selected</div>
+              <div class="selectedSub" id="selectedSub">Open inventory and pick your fighter</div>
+            </div>
+          </div>
+          <button class="btn primary" id="spinBtn" disabled>Spin</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="sectionHead">
+          <div>
+            <div class="sectionTitle">Limited rewards</div>
+            <div class="sectionMeta">Rare prizes disappear from pool after claim</div>
+          </div>
+          <button class="btn ghost" id="openPrizesBtn">See all</button>
+        </div>
+        <div class="prizeList" id="rarePreview"></div>
+      </div>
+    </section>
+
+    <section class="screen" id="inventory">
+      <div class="card">
+        <div class="sectionHead">
+          <div>
+            <div class="sectionTitle">Your Bunny inventory</div>
+            <div class="sectionMeta">1 Bunny = 1 spin · max 3 spins per wallet</div>
+          </div>
+          <div class="mini" id="inventoryMeta">0 items</div>
+        </div>
+        <div class="bunnyGrid" id="bunnyGrid"></div>
+      </div>
+    </section>
+
+    <section class="screen" id="rules">
+      <div class="card">
+        <div class="sectionTitle">Event rules</div>
+        <div class="rules">
+          <div class="rule"><span>1 Bunny = 1 spin.</span> A specific NFT can enter only once during the current season.</div>
+          <div class="rule"><span>Max 3 spins per wallet.</span> Even if the wallet holds more Bunny, seasonal wallet limit stays 3.</div>
+          <div class="rule"><span>Anti-abuse by Bunny ID.</span> If Bunny is sold after participation, it cannot spin again until next season.</div>
+          <div class="rule"><span>Rare rewards are limited.</span> Premium Avatar ×3, Premium Banner ×2, Golden Egg ×1.</div>
+          <div class="rule"><span>Fallback moderation later.</span> We can add manual review and wallet proof screens after API integration.</div>
+        </div>
+        <div class="divider"></div>
+        <div class="row">
+          <button class="btn secondary" id="resetBtn">Reset demo season</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="sectionTitle">Recent spins</div>
+        <div class="historyList" id="historyList"></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="overlay" id="spinOverlay">
+    <div class="sheet">
+      <div class="sheetTop">
+        <div class="sheetTitle">Spin chamber</div>
+        <button class="closeBtn" data-close="spinOverlay">✕</button>
+      </div>
+      <div class="spinStage">
+        <div class="mini">Selected Bunny: <span id="spinBunnyLabel">—</span></div>
+        <div class="spinner">
+          <div class="spinnerGlow"></div>
+          <div>
+            <div class="spinText" id="spinText">Ready</div>
+            <div class="spinSub" id="spinSub">Press start when your Bunny is selected</div>
+          </div>
+        </div>
+        <div class="row" style="justify-content:center">
+          <button class="btn primary full" id="startSpinBtn">Start spin</button>
+        </div>
+        <div class="resultBox" id="resultBox">
+          <div class="resultIcon" id="resultIcon">🎁</div>
+          <div class="resultTitle" id="resultTitle">Reward</div>
+          <div class="resultMeta" id="resultMeta"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="prizeOverlay">
+    <div class="sheet">
+      <div class="sheetTop">
+        <div class="sheetTitle">Prize pool</div>
+        <button class="closeBtn" data-close="prizeOverlay">✕</button>
+      </div>
+      <div class="prizeList" id="prizeList"></div>
+    </div>
+  </div>
+
+  <div class="overlay" id="profileOverlay">
+    <div class="sheet">
+      <div class="sheetTop">
+        <div class="sheetTitle">Profile</div>
+        <button class="closeBtn" data-close="profileOverlay">✕</button>
+      </div>
+      <div class="card" style="margin:0">
+        <div class="walletLabel">Telegram / wallet</div>
+        <div class="walletValue" id="profileWallet">Not connected</div>
+        <div class="statusPills">
+          <div class="pill" id="profileOwned">Owned: 0</div>
+          <div class="pill warn" id="profileSpins">Spins: 0 / 3</div>
+          <div class="pill good" id="profileSeason">Season active</div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px;margin-bottom:0">
+        <div class="sectionTitle">Reward history</div>
+        <div class="historyList" id="profileHistory"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
   <script>
-    const tg = window.Telegram?.WebApp;
-    if (tg) {
-      tg.expand();
-      tg.ready();
-    }
+    const tg = window.Telegram && window.Telegram.WebApp;
+    if (tg) { try { tg.ready(); tg.expand(); } catch(e){} }
 
-    const connectBtn = document.getElementById("connectBtn");
-    const loadBtn = document.getElementById("loadBtn");
-    const continueBtn = document.getElementById("continueBtn");
+    const SEASON_ID = 'easter_2026';
+    const STORAGE_KEY = 'degen_bunny_spin_state_v1';
+    const loadingPhrases = ['Charging luck...','Scanning carrot vault...','Polishing rare rewards...','Syncing Bunny aura...','Preparing spin chamber...'];
+    const TOTAL_LOADING_TIME = 3200;
+    const bunnyFaces = ['🐰','🐇','🥚','🌙','⚡','💎','🪩','🧿'];
 
-    const statusBox = document.getElementById("statusBox");
-    const walletBox = document.getElementById("walletBox");
-    const walletAddressEl = document.getElementById("walletAddress");
-    const inventoryEl = document.getElementById("inventory");
-    const chosenBox = document.getElementById("chosenBox");
-    const chosenNameEl = document.getElementById("chosenName");
-
-    let connectedWallet = null;
-    let selectedBunny = null;
-
-    // ВРЕМЕННЫЕ ДЕМОДАННЫЕ
-    // Потом заменим это на реальный запрос в TON API.
-    const mockBunnies = [
-      {
-        id: 7,
-        name: "Degen Bunny #7",
-        image: "https://placehold.co/200x200/png?text=Bunny+7",
-        seasonUsed: false,
-        lucky: false
-      },
-      {
-        id: 18,
-        name: "Degen Bunny #18",
-        image: "https://placehold.co/200x200/png?text=Bunny+18",
-        seasonUsed: false,
-        lucky: true
-      },
-      {
-        id: 31,
-        name: "Degen Bunny #31",
-        image: "https://placehold.co/200x200/png?text=Bunny+31",
-        seasonUsed: true,
-        lucky: false
-      }
+    const prizeTemplate = [
+      { id:'premium_avatar', name:'Premium Avatar', icon:'👑', description:'Custom premium avatar reward', rarity:'Rare', count:3, weight:3 },
+      { id:'premium_banner', name:'Premium Banner', icon:'🖼️', description:'Custom premium banner reward', rarity:'Rare', count:2, weight:2 },
+      { id:'golden_egg', name:'Golden Egg', icon:'🥚', description:'Animated avatar reward', rarity:'Legendary', count:1, weight:1 },
+      { id:'sticker_pack_7', name:'7 Sticker Pack', icon:'✨', description:'Seven premium stickers', rarity:'Common', count:999, weight:20 },
+      { id:'sticker_pack_5', name:'5 Sticker Pack', icon:'🎀', description:'Five sticker reward', rarity:'Common', count:999, weight:24 },
+      { id:'sticker_pack_3', name:'3 Sticker Pack', icon:'🎁', description:'Three sticker reward', rarity:'Common', count:999, weight:24 },
+      { id:'sticker_pack_1', name:'1 Sticker Reward', icon:'💌', description:'One sticker reward', rarity:'Common', count:999, weight:18 },
+      { id:'discount_10', name:'10% Discount', icon:'💸', description:'Discount on future shop order', rarity:'Common', count:999, weight:8 }
     ];
 
-    function setStatus(type, text) {
-      statusBox.className = "status " + type;
-      statusBox.textContent = text;
+    function createDefaultState(){
+      return {
+        seasonId: SEASON_ID,
+        wallet: null,
+        connected: false,
+        ownedBunnies: [],
+        selectedBunnyId: null,
+        walletSpinsUsed: 0,
+        bunnyUsage: {},
+        history: [],
+        prizes: JSON.parse(JSON.stringify(prizeTemplate))
+      };
     }
 
-    function shortenAddress(address) {
-      if (!address || address.length < 12) return address;
-      return address.slice(0, 6) + "..." + address.slice(-6);
+    let state = loadState();
+    let toastTimer = null;
+    let spinTimer = null;
+    let spinning = false;
+
+    function loadState(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return createDefaultState();
+        const parsed = JSON.parse(raw);
+        if(parsed.seasonId !== SEASON_ID) return createDefaultState();
+        parsed.prizes ||= JSON.parse(JSON.stringify(prizeTemplate));
+        parsed.ownedBunnies ||= [];
+        parsed.bunnyUsage ||= {};
+        parsed.history ||= [];
+        parsed.walletSpinsUsed ||= 0;
+        return parsed;
+      }catch(e){ return createDefaultState(); }
+    }
+    function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+
+    function createStars(){
+      const wrap = document.getElementById('stars');
+      for(let i=0;i<88;i++){
+        const s = document.createElement('div');
+        s.className = 'star';
+        const size = Math.random()*3 + 1.2;
+        s.style.width = size + 'px';
+        s.style.height = size + 'px';
+        s.style.left = Math.random()*100 + '%';
+        s.style.top = Math.random()*100 + '%';
+        s.style.animationDuration = (Math.random()*1 + .7) + 's';
+        s.style.animationDelay = (Math.random()*1.4) + 's';
+        wrap.appendChild(s);
+      }
     }
 
-    function renderInventory(items) {
-      inventoryEl.innerHTML = "";
+    function runSplash(){
+      const start = Date.now();
+      let phraseIndex = 0;
+      const bar = document.getElementById('bar');
+      const loadingText = document.getElementById('loadingText');
+      loadingText.textContent = loadingPhrases[0];
+      const phraseInt = setInterval(()=>{
+        phraseIndex = (phraseIndex + 1) % loadingPhrases.length;
+        loadingText.textContent = loadingPhrases[phraseIndex];
+      }, 450);
+      const progressInt = setInterval(()=>{
+        const progress = Math.min(100, ((Date.now()-start) / TOTAL_LOADING_TIME) * 100);
+        bar.style.width = progress + '%';
+        if(progress >= 100){
+          clearInterval(progressInt); clearInterval(phraseInt);
+          setTimeout(()=>{
+            const splash = document.getElementById('splash');
+            splash.style.opacity = '0';
+            setTimeout(()=> splash.remove(), 280);
+          }, 120);
+        }
+      }, 42);
+    }
 
-      if (!items.length) {
-        inventoryEl.innerHTML = `
-          <div class="status error">
-            No Degen Bunny NFTs found in this wallet.
-          </div>
-        `;
+    function showToast(text){
+      const el = document.getElementById('toast');
+      el.textContent = text;
+      el.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(()=> el.classList.remove('show'), 980);
+    }
+
+    function shortWallet(value){
+      if(!value) return 'Not connected';
+      return value.slice(0,6) + '...' + value.slice(-4);
+    }
+
+    function buildDemoInventory(){
+      const pool = [
+        { id:'DB-003', name:'Moon Carrot', trait:'Purple Aura', art:'🌙' },
+        { id:'DB-011', name:'Cyber Ear', trait:'Neon Vision', art:'⚡' },
+        { id:'DB-018', name:'Velvet Hopper', trait:'Crystal Dust', art:'💎' },
+        { id:'DB-029', name:'Egg Phantom', trait:'Golden Pulse', art:'🥚' },
+        { id:'DB-041', name:'Party Bunny', trait:'Mirror Disco', art:'🪩' }
+      ];
+      return pool.map(item => ({...item, used: !!state.bunnyUsage[item.id]}));
+    }
+
+    function ensureDemoInventory(){
+      if(!state.ownedBunnies.length){
+        state.ownedBunnies = buildDemoInventory();
+        saveState();
+      }
+    }
+
+    function connectDemo(){
+      state.connected = true;
+      state.wallet = 'UQDemoBunnyWallet9384XH23';
+      ensureDemoInventory();
+      saveState();
+      updateUI();
+      showToast('Demo wallet connected');
+    }
+
+    function getSelectedBunny(){
+      return state.ownedBunnies.find(b => b.id === state.selectedBunnyId) || null;
+    }
+
+    function selectBunny(id){
+      const bunny = state.ownedBunnies.find(b => b.id === id);
+      if(!bunny) return;
+      if(state.bunnyUsage[id]){
+        showToast('This Bunny already spun this season');
         return;
       }
+      if(state.walletSpinsUsed >= 3){
+        showToast('Wallet spin limit reached');
+        return;
+      }
+      state.selectedBunnyId = id;
+      saveState();
+      updateUI();
+      showToast(bunny.name + ' selected');
+    }
 
-      items.forEach((bunny) => {
-        const card = document.createElement("div");
-        card.className = "bunny-card";
+    function openScreen(name){
+      document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(el => el.classList.toggle('active', el.dataset.screen === name));
+      document.getElementById(name).classList.add('active');
+    }
 
-        card.innerHTML = `
-          <div class="bunny-cover">
-            <img src="${bunny.image}" alt="${bunny.name}" />
-          </div>
+    function openOverlay(id){ document.getElementById(id).classList.add('show'); }
+    function closeOverlay(id){ document.getElementById(id).classList.remove('show'); }
 
-          <div>
-            <div class="bunny-title">${bunny.name}</div>
-            <div class="bunny-meta">NFT ID: ${bunny.id}</div>
+    function availablePrizes(){ return state.prizes.filter(p => p.count > 0); }
 
-            <div class="tag-row">
-              <div class="tag ${bunny.seasonUsed ? "used" : "available"}">
-                ${bunny.seasonUsed ? "Used in 2026" : "Available for 2026"}
-              </div>
-              ${bunny.lucky ? `<div class="tag lucky">Lucky</div>` : ""}
-            </div>
-
-            <button
-              class="mini-btn ${bunny.seasonUsed ? "btn-secondary" : "btn-primary"}"
-              ${bunny.seasonUsed ? "disabled" : ""}
-              data-id="${bunny.id}"
-            >
-              ${bunny.seasonUsed ? "Already Used" : "Use This Bunny"}
-            </button>
-          </div>
-        `;
-
-        inventoryEl.appendChild(card);
+    function pickPrize(){
+      const pool = availablePrizes();
+      const expanded = [];
+      pool.forEach(p => {
+        const weight = Math.max(1, p.weight);
+        for(let i=0;i<weight;i++) expanded.push(p.id);
       });
+      const chosenId = expanded[Math.floor(Math.random() * expanded.length)];
+      return state.prizes.find(p => p.id === chosenId);
+    }
 
-      document.querySelectorAll("[data-id]").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const bunnyId = Number(btn.dataset.id);
-          const bunny = items.find((item) => item.id === bunnyId);
-          if (!bunny || bunny.seasonUsed) return;
+    function formatTime(ts){
+      const d = new Date(ts);
+      return d.toLocaleDateString('ru-RU') + ' · ' + d.toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'});
+    }
 
-          selectedBunny = bunny;
-          chosenNameEl.textContent = `${bunny.name} • Eligible for Easter Spin 2026`;
-          chosenBox.classList.remove("hidden");
-          setStatus("success", `${bunny.name} selected. You can continue to the spin screen.`);
+    function startSpin(){
+      const bunny = getSelectedBunny();
+      if(!bunny) return showToast('Choose Bunny first');
+      if(state.walletSpinsUsed >= 3) return showToast('Wallet spin limit reached');
+      if(state.bunnyUsage[bunny.id]) return showToast('This Bunny already used');
+      if(spinning) return;
+      spinning = true;
+      document.getElementById('startSpinBtn').disabled = true;
+      document.getElementById('resultBox').classList.remove('show');
+      document.getElementById('spinSub').textContent = 'Scanning reward matrix...';
+      const labels = availablePrizes().map(p => p.icon + ' ' + p.name);
+      let i = 0;
+      spinTimer = setInterval(()=>{
+        document.getElementById('spinText').textContent = labels[i % labels.length];
+        i++;
+      }, 110);
+
+      setTimeout(()=>{
+        clearInterval(spinTimer);
+        const prize = pickPrize();
+        prize.count = Math.max(0, prize.count - 1);
+        state.walletSpinsUsed += 1;
+        state.bunnyUsage[bunny.id] = true;
+        state.selectedBunnyId = null;
+        const entry = {
+          bunnyId: bunny.id,
+          bunnyName: bunny.name,
+          prizeId: prize.id,
+          prizeName: prize.name,
+          prizeIcon: prize.icon,
+          time: Date.now()
+        };
+        state.history.unshift(entry);
+        state.history = state.history.slice(0, 20);
+        state.ownedBunnies = state.ownedBunnies.map(item => item.id === bunny.id ? {...item, used:true} : item);
+        saveState();
+        document.getElementById('spinText').textContent = prize.icon + ' ' + prize.name;
+        document.getElementById('spinSub').textContent = 'Reward secured for ' + bunny.id;
+        document.getElementById('resultIcon').textContent = prize.icon;
+        document.getElementById('resultTitle').textContent = prize.name;
+        document.getElementById('resultMeta').textContent = bunny.name + ' joined the Easter Spin and locked this result for the current season.';
+        document.getElementById('resultBox').classList.add('show');
+        document.getElementById('startSpinBtn').disabled = false;
+        spinning = false;
+        updateUI();
+        showToast('You won: ' + prize.name);
+      }, 2400);
+    }
+
+    function renderRarePreview(){
+      const rare = state.prizes.filter(p => ['premium_avatar','premium_banner','golden_egg'].includes(p.id));
+      const container = document.getElementById('rarePreview');
+      container.innerHTML = '';
+      rare.forEach(prize => {
+        const el = document.createElement('div');
+        el.className = 'prize';
+        el.innerHTML = `
+          <div class="prizeIcon">${prize.icon}</div>
+          <div><div class="prizeName">${prize.name}</div><div class="prizeMeta">${prize.description}</div></div>
+          <div class="prizeCount">Left: ${prize.count}</div>`;
+        container.appendChild(el);
+      });
+    }
+
+    function renderPrizeList(){
+      const container = document.getElementById('prizeList');
+      container.innerHTML = '';
+      state.prizes.forEach(prize => {
+        const el = document.createElement('div');
+        el.className = 'prize';
+        el.innerHTML = `
+          <div class="prizeIcon">${prize.icon}</div>
+          <div>
+            <div class="prizeName">${prize.name}</div>
+            <div class="prizeMeta">${prize.rarity} · ${prize.description}</div>
+          </div>
+          <div class="prizeCount">${prize.count >= 999 ? '∞' : 'Left: ' + prize.count}</div>`;
+        container.appendChild(el);
+      });
+    }
+
+    function renderInventory(){
+      const grid = document.getElementById('bunnyGrid');
+      const meta = document.getElementById('inventoryMeta');
+      grid.innerHTML = '';
+      meta.textContent = `${state.ownedBunnies.length} items`;
+      if(!state.ownedBunnies.length){
+        grid.innerHTML = `<div class="cardSub">Connect wallet or load demo inventory to see Bunny cards here.</div>`;
+        return;
+      }
+      state.ownedBunnies.forEach(bunny => {
+        const used = !!state.bunnyUsage[bunny.id];
+        const selected = state.selectedBunnyId === bunny.id;
+        const el = document.createElement('div');
+        el.className = 'bunny' + (used ? ' used' : '') + (selected ? ' selected' : '');
+        el.onclick = () => selectBunny(bunny.id);
+        el.innerHTML = `
+          <div class="bunnyHead">
+            <div class="bunnyId">${bunny.id}</div>
+            <div class="badge ${used ? 'used' : 'available'}">${used ? 'Used' : 'Available'}</div>
+          </div>
+          <div class="bunnyArt">${bunny.art || bunnyFaces[Math.floor(Math.random()*bunnyFaces.length)]}</div>
+          <div class="bunnyName">${bunny.name}</div>
+          <div class="bunnyMeta">Trait: ${bunny.trait}<br>Season: ${used ? 'Locked' : 'Ready for spin'}</div>`;
+        grid.appendChild(el);
+      });
+    }
+
+    function renderHistory(){
+      const lists = [document.getElementById('historyList'), document.getElementById('profileHistory')];
+      lists.forEach(list => {
+        list.innerHTML = '';
+        if(!state.history.length){
+          list.innerHTML = '<div class="cardSub">No spins yet. Your results will appear here.</div>';
+          return;
+        }
+        state.history.slice(0,8).forEach(item => {
+          const el = document.createElement('div');
+          el.className = 'history';
+          el.innerHTML = `<div class="historyTop"><div class="historyName">${item.bunnyId} · ${item.bunnyName}</div><div class="historyTime">${formatTime(item.time)}</div></div><div class="historyPrize">${item.prizeIcon} ${item.prizeName}</div>`;
+          list.appendChild(el);
         });
       });
     }
 
-    connectBtn.addEventListener("click", async () => {
-      // ВРЕМЕННО:
-      // Здесь потом подключим TON Connect.
-      connectedWallet = "EQDemoWalletAddress123456789Bunny";
-      walletAddressEl.textContent = shortenAddress(connectedWallet);
-      walletBox.classList.remove("hidden");
-      loadBtn.classList.remove("hidden");
+    function updateUI(){
+      const selected = getSelectedBunny();
+      const rareLeft = state.prizes.filter(p => ['premium_avatar','premium_banner','golden_egg'].includes(p.id)).reduce((sum,p)=>sum+p.count,0);
+      document.getElementById('walletValue').textContent = state.connected ? shortWallet(state.wallet) : 'Not connected';
+      document.getElementById('profileWallet').textContent = state.connected ? state.wallet : 'Not connected';
+      document.getElementById('ownedPill').textContent = 'Owned: ' + state.ownedBunnies.length;
+      document.getElementById('selectedPill').textContent = 'Selected: ' + (selected ? selected.id : 'none');
+      document.getElementById('metricOwned').textContent = state.ownedBunnies.length;
+      document.getElementById('metricSpins').textContent = state.walletSpinsUsed + ' / 3';
+      document.getElementById('metricRare').textContent = rareLeft;
+      document.getElementById('profileOwned').textContent = 'Owned: ' + state.ownedBunnies.length;
+      document.getElementById('profileSpins').textContent = 'Spins: ' + state.walletSpinsUsed + ' / 3';
+      document.getElementById('connectBtn').textContent = state.connected ? 'Connected' : 'Demo connect';
+      document.getElementById('connectBtn').disabled = state.connected;
+      document.getElementById('selectedArt').textContent = selected ? selected.art : '?';
+      document.getElementById('selectedName').textContent = selected ? selected.name : 'No Bunny selected';
+      document.getElementById('selectedSub').textContent = selected ? `${selected.id} · ${selected.trait}` : 'Open inventory and pick your fighter';
+      document.getElementById('spinBtn').disabled = !selected || state.walletSpinsUsed >= 3;
+      document.getElementById('spinBunnyLabel').textContent = selected ? `${selected.id} · ${selected.name}` : '—';
+      document.getElementById('limitPill').className = 'pill ' + (state.walletSpinsUsed >= 3 ? 'bad' : 'warn');
+      document.getElementById('limitPill').textContent = `Wallet limit: ${state.walletSpinsUsed}/3 used`;
+      renderRarePreview();
+      renderPrizeList();
+      renderInventory();
+      renderHistory();
+    }
 
-      setStatus("success", "Wallet connected. Now load your Degen Bunny inventory.");
+    function resetSeason(){
+      state = createDefaultState();
+      saveState();
+      updateUI();
+      openScreen('home');
+      showToast('Demo season reset');
+    }
+
+    document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => openScreen(tab.dataset.screen)));
+    document.querySelectorAll('[data-close]').forEach(btn => btn.addEventListener('click', () => closeOverlay(btn.dataset.close)));
+    document.getElementById('connectBtn').addEventListener('click', connectDemo);
+    document.getElementById('loadDemoBtn').addEventListener('click', () => {
+      if(!state.connected) connectDemo();
+      ensureDemoInventory();
+      saveState();
+      updateUI();
+      showToast('Demo inventory loaded');
     });
-
-    loadBtn.addEventListener("click", async () => {
-      setStatus("info", "Loading your Bunny inventory...");
-
-      // ВРЕМЕННО:
-      // Здесь позже будет fetch к TON API.
-      setTimeout(() => {
-        renderInventory(mockBunnies);
-        setStatus("success", "Inventory loaded. Choose the Bunny you want to use.");
-      }, 700);
+    document.getElementById('goInventoryBtn').addEventListener('click', () => openScreen('inventory'));
+    document.getElementById('spinBtn').addEventListener('click', () => {
+      if(!getSelectedBunny()) return showToast('Choose Bunny first');
+      document.getElementById('resultBox').classList.remove('show');
+      document.getElementById('spinText').textContent = 'Ready';
+      document.getElementById('spinSub').textContent = 'Press start when your Bunny is selected';
+      document.getElementById('spinBunnyLabel').textContent = `${getSelectedBunny().id} · ${getSelectedBunny().name}`;
+      openOverlay('spinOverlay');
     });
+    document.getElementById('startSpinBtn').addEventListener('click', startSpin);
+    document.getElementById('openPrizesBtn').addEventListener('click', () => openOverlay('prizeOverlay'));
+    document.getElementById('prizeBtn').addEventListener('click', () => openOverlay('prizeOverlay'));
+    document.getElementById('profileBtn').addEventListener('click', () => openOverlay('profileOverlay'));
+    document.getElementById('resetBtn').addEventListener('click', resetSeason);
+    document.getElementById('spinOverlay').addEventListener('click', e => { if(e.target.id === 'spinOverlay' && !spinning) closeOverlay('spinOverlay'); });
+    document.getElementById('prizeOverlay').addEventListener('click', e => { if(e.target.id === 'prizeOverlay') closeOverlay('prizeOverlay'); });
+    document.getElementById('profileOverlay').addEventListener('click', e => { if(e.target.id === 'profileOverlay') closeOverlay('profileOverlay'); });
 
-    continueBtn.addEventListener("click", () => {
-      if (!selectedBunny) {
-        setStatus("error", "Choose a Bunny first.");
-        return;
-      }
-
-      setStatus(
-        "info",
-        `Next step: open the real spin screen for ${selectedBunny.name}.`
-      );
-
-      if (tg?.HapticFeedback) {
-        tg.HapticFeedback.notificationOccurred("success");
-      }
-    });
+    createStars();
+    updateUI();
+    runSplash();
   </script>
 </body>
 </html>
